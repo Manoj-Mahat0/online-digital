@@ -1,18 +1,13 @@
 // src/pages/IsoPage.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function IsoPage() {
-  const [captcha, setCaptcha] = useState(() =>
-    Math.floor(10000 + Math.random() * 90000).toString()
-  );
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
   const [faqsOpen, setFaqsOpen] = useState([false, false, false, false]);
-
-  function regenCaptcha() {
-    setCaptcha(Math.floor(10000 + Math.random() * 90000).toString());
-  }
 
   function validateForm(data) {
     const e = {};
@@ -20,22 +15,61 @@ export default function IsoPage() {
     if (!/^\d{10}$/.test((data.mobileNumber || "").trim()))
       e.mobileNumber = "Enter valid 10-digit mobile number.";
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = "Enter a valid email address.";
-    if ((data.verificationCode || "").trim() !== captcha) e.captcha = "Incorrect code!";
+    // verification code removed as requested
     return e;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const fd = new FormData(e.target);
-    const payload = Object.fromEntries(fd.entries());
-    const validation = validateForm(payload);
+    // Build plain object from form entries
+    const formObj = Object.fromEntries(fd.entries());
+
+    const validation = validateForm(formObj);
     setErrors(validation);
-    if (Object.keys(validation).length === 0) {
-      setSuccess(true);
-      e.target.reset();
-      regenCaptcha();
-      setTimeout(() => setSuccess(false), 3500);
-    } else {
+
+    if (Object.keys(validation).length > 0) {
+      setSuccess(false);
+      return;
+    }
+
+    // Map form fields to API payload keys
+    const payload = {
+      enquiry_type: formObj.enquiryType || "",
+      certificate_type: formObj.certificateType || "",
+      applicant_name: formObj.applicantName || "",
+      mobile: formObj.mobileNumber || "",
+      email: formObj.email || "",
+      message: formObj.message || "",
+    };
+
+    try {
+      const resp = await fetch("https://onlinebe.onrender.com/enquiries/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await resp.json().catch(() => ({}));
+
+      if (resp.status === 201) {
+        toast.success(data.message || "Enquiry received");
+        setSuccess(true);
+        e.target.reset();
+        setErrors({});
+        // hide inline success after a short time
+        setTimeout(() => setSuccess(false), 3500);
+      } else {
+        const msg = data?.message || data?.detail || `Submission failed (${resp.status})`;
+        toast.error(msg);
+        setSuccess(false);
+      }
+    } catch (err) {
+      console.error("Enquiry submit error:", err);
+      toast.error("Network error — please check your connection.");
       setSuccess(false);
     }
   }
@@ -50,8 +84,9 @@ export default function IsoPage() {
 
   return (
     <main className="bg-blue-50 text-gray-900">
-      <div className="container mx-auto px-4 py-8">
+      <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
 
+      <div className="container mx-auto px-4 py-8">
         {/* Hero */}
         <section className="w-full bg-blue-500 rounded-xl p-8 text-white mb-8">
           <div className="md:flex md:items-center md:gap-8">
@@ -157,24 +192,18 @@ export default function IsoPage() {
                     )}
                   </div>
 
-                  {/* Captcha */}
-                  <div className="flex items-center gap-2">
-                    <input
-                      name="verificationCode"
-                      placeholder="Verification Code *"
-                      className="flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                  {/* Message (mapped to API 'message') */}
+                  <div>
+                    <label className="block text-sm font-medium text-blue-800 mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      name="message"
+                      rows="3"
+                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                      placeholder="Optional message (e.g. best time to call)"
                     />
-                    <div
-                      onClick={regenCaptcha}
-                      role="button"
-                      className="bg-blue-600 text-white font-bold px-4 py-2 rounded-lg cursor-pointer select-none"
-                    >
-                      {captcha}
-                    </div>
                   </div>
-                  {errors.captcha && (
-                    <p className="text-red-600 text-sm mt-1">{errors.captcha}</p>
-                  )}
 
                   {/* Submit Button */}
                   <button
@@ -186,6 +215,7 @@ export default function IsoPage() {
                   >
                     Enquiry Now
                   </button>
+
                   {success && (
                     <p className="text-green-600 font-semibold text-center mt-2">
                       Form submitted successfully!
@@ -196,7 +226,6 @@ export default function IsoPage() {
             </div>
           </div>
         </section>
-
 
         {/* Info Card */}
         <section className="bg-white rounded-xl shadow-lg p-6 mb-8 grid md:grid-cols-2 gap-6 items-center">

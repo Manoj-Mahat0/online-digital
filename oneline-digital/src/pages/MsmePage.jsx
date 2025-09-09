@@ -1,13 +1,12 @@
 // src/pages/MsmePage.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /**
- * MSME Page converted from the provided HTML.
- * - No global header/footer included (App-level header/footer should wrap this page).
- * - Uses Tailwind utility classes like in your HTML; assumes tailwind is configured.
- * - Simple FAQ toggle implemented with React state.
- * - Form submit is prevented (you can wire it to your API later).
+ * MSME Page wired to POST JSON to https://onlinebe.onrender.com/msme/
+ * Minimal UI changes — kept your markup and styles intact.
  */
 
 export default function MsmePage() {
@@ -21,88 +20,105 @@ export default function MsmePage() {
     });
   }
 
-  function handleSubmit(e) {
+  function isoToDdMmYyyy(iso) {
+    if (!iso) return "";
+    const parts = iso.split("-");
+    if (parts.length !== 3) return iso;
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    // TODO: wire to your backend or form handler
-    alert("Form submitted (demo) — hook up your API here.");
+    const form = e.target;
+    const fd = new FormData(form);
+    const obj = Object.fromEntries(fd.entries());
+
+    // basic required checks (minimal, non-invasive)
+    if (!obj.applicant_name?.trim()) {
+      toast.error("Please enter Applicant Name.");
+      return;
+    }
+    if (!/^\d{10}$/.test((obj.mobile || "").trim())) {
+      toast.error("Enter valid 10-digit mobile number.");
+      return;
+    }
+    if (!obj.email?.trim()) {
+      toast.error("Please enter Email ID.");
+      return;
+    }
+
+    // Build payload matching API
+    const payload = {
+      applicant_name: obj.applicant_name || "",
+      mobile: obj.mobile || "",
+      email: obj.email || "",
+      office_address: obj.office_address || "",
+      pincode: obj.pincode || "",
+      state: obj.state || "",
+      district: obj.district || "",
+      social_category: obj.social_category || "",
+      organisation_type: obj.organisation_type || "",
+      business_name: obj.business_name || "",
+      incorporation_date: isoToDdMmYyyy(obj.incorporation_date || ""),
+      main_activity: obj.main_activity || "",
+      additional_details: obj.additional_details || "",
+    };
+
+    try {
+      const resp = await fetch("https://onlinebe.onrender.com/msme/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await resp.json().catch(() => ({}));
+
+      if (resp.status === 201) {
+        toast.success(data.message || "MSME registration received");
+        form.reset();
+      } else {
+        const msg = data?.message || data?.detail || `Submission failed (${resp.status})`;
+        toast.error(msg);
+      }
+    } catch (err) {
+      console.error("MSME submit error:", err);
+      toast.error("Network error — please check your connection.");
+    }
   }
 
   return (
     <main className="bg-gray-100 text-gray-800">
+      <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
       <div className="container mx-auto px-4 py-6">
 
-        {/* Topbar */}
-        <div className="bg-forest text-white py-2 rounded-md mb-4 hidden">
-          {/* kept hidden by default - you can enable or style as needed */}
-        </div>
+        {/* Topbar (kept as-is) */}
+        <div className="bg-forest text-white py-2 rounded-md mb-4 hidden"></div>
 
         {/* Header */}
         <header className="bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] text-white py-6 rounded-2xl mb-6">
           <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-6">
-
-            {/* Left Logos */}
             <div className="flex items-center gap-4 bg-white rounded-lg px-4 py-2">
               <img src="/img/edigital.png" alt="e-digital" className="h-12" />
               <img src="/img/iso.png" alt="ISO" className="h-12" />
             </div>
 
-            {/* Center Text */}
             <div className="text-center">
-              <h5 className="text-lg md:text-xl font-semibold">
-                सूक्ष्म, लघु और मध्यम उद्यम पंजीकरण कंसल्टेंसी सेवा
-              </h5>
-              <h6 className="font-bold text-yellow-400 uppercase">
-                REGISTRATION CONSULTANCY FOR MICRO, SMALL & MEDIUM ENTERPRISES
-              </h6>
-              <p className="text-sm italic mt-1">
-                (An ISO Certified Consultancy Private Organisation)
-              </p>
+              <h5 className="text-lg md:text-xl font-semibold">सूक्ष्म, लघु और मध्यम उद्यम पंजीकरण कंसल्टेंसी सेवा</h5>
+              <h6 className="font-bold text-yellow-400 uppercase">REGISTRATION CONSULTANCY FOR MICRO, SMALL & MEDIUM ENTERPRISES</h6>
+              <p className="text-sm italic mt-1">(An ISO Certified Consultancy Private Organisation)</p>
               <div className="inline-block bg-[#D4EDDA] text-[#0B3D2E] rounded-lg px-4 py-1 mt-2 font-semibold">
                 MSME Registration Consultancy Portal / उद्यम पंजीकरण कंसल्टेंसी पोर्टल
               </div>
             </div>
 
-            {/* Right Logo */}
             <div>
               <img src="/img/swach-bharat.png" alt="Swachh Bharat" className="h-16" />
             </div>
-
           </div>
         </header>
-
-
-        {/* Nav (simple) */}
-        {/* <nav className="bg-white rounded-lg shadow-sm mb-8">
-          <div className="overflow-x-auto">
-            <ul className="flex gap-2 whitespace-nowrap py-3 px-4 text-sm md:text-base">
-              <li>
-                <a href="#formSection" className="py-2 px-4 rounded hover:bg-royalpurple hover:text-yellow-400 transition">
-                  NEW UDYAM REGISTRATION CONSULTANCY
-                </a>
-              </li>
-              <li>
-                <a href="#formSection" className="py-2 px-4 rounded hover:bg-royalpurple hover:text-yellow-400 transition">
-                  UDYAM RE-REGISTRATION CONSULTANCY
-                </a>
-              </li>
-              <li>
-                <a href="#formSection" className="py-2 px-4 rounded hover:bg-royalpurple hover:text-yellow-400 transition">
-                  UPDATE UDYAM CERTIFICATE CONSULTANCY
-                </a>
-              </li>
-              <li>
-                <a href="#formSection" className="py-2 px-4 rounded hover:bg-royalpurple hover:text-yellow-400 transition">
-                  PRINT UDYAM CERTIFICATE CONSULTANCY
-                </a>
-              </li>
-              <li>
-                <a href="#formSection" className="py-2 px-4 rounded hover:bg-royalpurple hover:text-yellow-400 transition">
-                  CANCEL UDYAM REGISTRATION CONSULTANCY
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav> */}
 
         {/* Marquee */}
         <div className="bg-forest text-white py-2 px-4 rounded-lg mb-8">
@@ -125,56 +141,79 @@ export default function MsmePage() {
               <h3 className="text-2xl font-bold text-[#0B3D2E] mb-6">MSME REGISTRATION CONSULTANCY ONLINE FORM</h3>
 
               <form className="space-y-4" onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  className="w-full rounded-lg p-3 border border-gray-200"
-                  placeholder="Applicant Name *"
-                  required
-                />
-                <input
-                  type="text"
-                  className="w-full rounded-lg p-3 border border-gray-200"
-                  placeholder="Mobile Number *"
-                  required
-                />
-                <input
-                  type="email"
-                  className="w-full rounded-lg p-3 border border-gray-200"
-                  placeholder="Email ID *"
-                  required
-                />
-                <input
-                  type="text"
-                  className="w-full rounded-lg p-3 border border-gray-200"
-                  placeholder="Office Address *"
-                  required
-                />
+                <input name="applicant_name" type="text" className="w-full rounded-lg p-3 border border-gray-200" placeholder="Applicant Name *" required />
+
+                <input name="mobile" type="text" placeholder="Mobile *" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="Mobile" inputMode="numeric" pattern="[0-9]*" onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, ""); }} />
+
+                <input name="email" type="email" className="w-full rounded-lg p-3 border border-gray-200" placeholder="Email ID *" required />
+
+                <input name="office_address" type="text" className="w-full rounded-lg p-3 border border-gray-200" placeholder="Office Address *" required />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <input className="rounded-lg p-3 border border-gray-200" placeholder="Pincode *" />
-                  <select className="rounded-lg p-3 border border-gray-200">
-                    <option>Select State</option>
+                  <input name="pincode" type="text" placeholder="Pincode *" className="rounded-lg p-3 border border-gray-200 w-full" inputMode="numeric" pattern="[0-9]*" maxLength={6} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, ""); }} />
+
+                  <select name="state" className="rounded-lg p-3 border border-gray-200">
+                    <option value="">Select State</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Arunachal Pradesh</option>
+                    <option>Assam</option>
+                    <option>Bihar</option>
+                    <option>Chhattisgarh</option>
+                    <option>Goa</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Himachal Pradesh</option>
+                    <option>Jharkhand</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Manipur</option>
+                    <option>Meghalaya</option>
+                    <option>Mizoram</option>
+                    <option>Nagaland</option>
+                    <option>Odisha</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Sikkim</option>
+                    <option>Tamil Nadu</option>
+                    <option>Telangana</option>
+                    <option>Tripura</option>
+                    <option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option>
+                    <option>West Bengal</option>
                   </select>
-                  <select className="rounded-lg p-3 border border-gray-200">
-                    <option>Select District</option>
+
+                  <select name="district" className="rounded-lg p-3 border border-gray-200">
+                    <option value="">Select District</option>
+                    <option>Ranchi</option>
+                    <option>East Singhbhum</option>
+                    <option>West Singhbhum</option>
                   </select>
                 </div>
 
-                <select className="w-full rounded-lg p-3 border border-gray-200">
-                  <option>Social Category</option>
+                <select name="social_category" className="w-full rounded-lg p-3 border border-gray-200">
+                  <option value="">Social Category</option>
+                  <option>General</option>
+                  <option>SC</option>
+                  <option>ST</option>
+                  <option>OBC</option>
                 </select>
 
-                <select className="w-full rounded-lg p-3 border border-gray-200">
-                  <option>Type of Organisation</option>
+                <select name="organisation_type" className="w-full rounded-lg p-3 border border-gray-200">
+                  <option value="">Type of Organisation</option>
+                  <option>Proprietorship</option>
+                  <option>Partnership</option>
+                  <option>Pvt. Ltd.</option>
+                  <option>LLP</option>
                 </select>
 
-                <input className="w-full rounded-lg p-3 border border-gray-200" placeholder="Business Name" />
-                <input type="date" className="w-full rounded-lg p-3 border border-gray-200" />
+                <input name="business_name" className="w-full rounded-lg p-3 border border-gray-200" placeholder="Business Name" />
 
-                <select className="w-full rounded-lg p-3 border border-gray-200" required>
-                  <option value="" disabled selected>
-                    Main Business Activity of Enterprise
-                  </option>
+                <input name="incorporation_date" type="date" className="w-full rounded-lg p-3 border border-gray-200" />
+
+                <select name="main_activity" className="w-full rounded-lg p-3 border border-gray-200" required>
+                  <option value="" disabled>Main Business Activity of Enterprise</option>
                   <option>Manufacturing</option>
                   <option>Trading</option>
                   <option>Service</option>
@@ -187,19 +226,14 @@ export default function MsmePage() {
                   <option>Wholesale</option>
                 </select>
 
-                <textarea className="w-full rounded-lg p-3 border border-gray-200" placeholder="Additional Details About Business" />
+                <textarea name="additional_details" className="w-full rounded-lg p-3 border border-gray-200" placeholder="Additional Details About Business" />
 
                 <div className="flex items-center gap-2">
-                  <input id="agree" type="checkbox" className="mt-1" />
-                  <label htmlFor="agree" className="text-sm">
-                    I agree to the Terms of Service
-                  </label>
+                  <input id="agree" name="agree" type="checkbox" className="mt-1" />
+                  <label htmlFor="agree" className="text-sm">I agree to the Terms of Service</label>
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-3 bg-royalpurple text-yellow-300 font-bold rounded-lg hover:bg-forest transition"
-                >
+                <button type="submit" className="w-full py-3 bg-royalpurple text-yellow-300 font-bold rounded-lg hover:bg-forest transition">
                   SUBMIT APPLICATION
                 </button>
               </form>
@@ -323,14 +357,9 @@ export default function MsmePage() {
               },
             ].map((item, idx) => (
               <div key={idx} className="border rounded-lg p-4 bg-white shadow-neu">
-                <button
-                  className="w-full text-left flex justify-between items-center font-semibold text-lg"
-                  onClick={() => toggleFaq(idx)}
-                >
+                <button className="w-full text-left flex justify-between items-center font-semibold text-lg" onClick={() => toggleFaq(idx)}>
                   <span>{item.q}</span>
-                  <span className={`transform transition-transform duration-200 ${faqsOpen[idx] ? "rotate-180" : ""}`}>
-                    ▾
-                  </span>
+                  <span className={`transform transition-transform duration-200 ${faqsOpen[idx] ? "rotate-180" : ""}`}>▾</span>
                 </button>
                 {faqsOpen[idx] && <p className="mt-3 text-gray-700">{item.a}</p>}
               </div>
@@ -338,7 +367,7 @@ export default function MsmePage() {
           </div>
         </section>
 
-        {/* Footer note (page-level) */}
+        {/* Footer */}
         <footer className="text-center text-sm text-gray-600 py-6">
           <img src="/img/mainLogo.png" alt="logo" className="mx-auto h-12 mb-2" />
           <p>© {new Date().getFullYear()} Online Digital India. All Rights Reserved.</p>

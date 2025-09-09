@@ -299,7 +299,9 @@ export default function GemPage() {
           {/* Heading */}
           <div className="flex justify-center">
             <div className="inline-block">
-              <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">Why Choose Us?</h4>
+              <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">
+                Why Choose Us?
+              </h4>
             </div>
           </div>
 
@@ -308,52 +310,69 @@ export default function GemPage() {
             <div className="neo p-6 rounded-xl text-center">
               <i className="fa-solid fa-shield-halved text-teal-600 text-4xl mb-3"></i>
               <h6 className="font-bold text-lg">Trusted Service</h6>
-              <p className="text-sm mt-2">Secure and reliable consultancy for all GEM registrations.</p>
+              <p className="text-sm mt-2">
+                Secure and reliable consultancy for all GEM registrations.
+              </p>
             </div>
 
             <div className="neo p-6 rounded-xl text-center">
               <i className="fa-solid fa-bolt text-teal-600 text-4xl mb-3"></i>
               <h6 className="font-bold text-lg">Quick Processing</h6>
-              <p className="text-sm mt-2">Fast & hassle-free application with expert support.</p>
+              <p className="text-sm mt-2">
+                Fast & hassle-free application with expert support.
+              </p>
             </div>
 
             <div className="neo p-6 rounded-xl text-center">
               <i className="fa-solid fa-headset text-teal-600 text-4xl mb-3"></i>
               <h6 className="font-bold text-lg">24/7 Assistance</h6>
-              <p className="text-sm mt-2">Our support team is always available to help you.</p>
+              <p className="text-sm mt-2">
+                Our support team is always available to help you.
+              </p>
             </div>
           </div>
         </div>
       </section>
+
+            
 
       {/* FAQ */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex justify-center">
             <div className="inline-block">
-              <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">FAQs – GEM Registration</h4>
+              <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">
+                FAQs – GEM Registration
+              </h4>
             </div>
           </div>
           <div className="space-y-4">
             <details className="neo p-4 rounded-xl">
               <summary className="font-semibold cursor-pointer">Q1. Who can register on the GEM portal?</summary>
-              <p className="mt-2 text-sm">Any company can register to sell to government buyers, whether they are merchants, manufacturers, or service providers.</p>
+              <p className="mt-2 text-sm">Any company can register to sell to government buyers, whether they are merchants,
+                manufacturers, or service providers.</p>
             </details>
             <details className="neo p-4 rounded-xl">
               <summary className="font-semibold cursor-pointer">Q2. Why should businesses register on the GEM portal?</summary>
-              <p className="mt-2 text-sm">It gives businesses access to government buyers, faster payments, and increased credibility through transparent procurement.</p>
+              <p className="mt-2 text-sm">It gives businesses access to government buyers, faster payments, and increased
+                credibility through transparent procurement.</p>
             </details>
             <details className="neo p-4 rounded-xl">
               <summary className="font-semibold cursor-pointer">Q3. Do I need GST to register on GEM?</summary>
-              <p className="mt-2 text-sm">While it’s not mandatory for all, having a GST number improves your credibility and allows access to more opportunities.</p>
+              <p className="mt-2 text-sm">While it’s not mandatory for all, having a GST number improves your credibility and
+                allows access to more opportunities.</p>
             </details>
             <details className="neo p-4 rounded-xl">
-              <summary className="font-semibold cursor-pointer">Q4. How long does it take to complete the GEM registration process?</summary>
+              <summary className="font-semibold cursor-pointer">Q4. How long does it take to complete the GEM registration
+                process?</summary>
               <p className="mt-2 text-sm">Typically, it takes 3–7 working days once all documents are correctly submitted.</p>
             </details>
             <details className="neo p-4 rounded-xl">
               <summary className="font-semibold cursor-pointer">Q5. Why should businesses register on the GEM portal?</summary>
-              <p className="mt-2 text-sm">Registering on the GEM portal enables businesses to connect with a vast network of government buyers, enjoy transparent procurement processes, receive faster payments, and enhance their credibility in the public sector market.</p>
+              <p className="mt-2 text-sm">
+                Registering on the GEM portal enables businesses to connect with a vast network of government buyers, enjoy
+                transparent procurement processes, receive faster payments, and enhance their credibility in the public
+                sector market.</p>
             </details>
           </div>
         </div>

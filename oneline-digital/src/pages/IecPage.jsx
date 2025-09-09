@@ -1,6 +1,8 @@
 // src/pages/IecPage.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function IecPage() {
   const [faqOpen, setFaqOpen] = useState([false, false, false, false]);
@@ -13,20 +15,71 @@ export default function IecPage() {
     });
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const fd = new FormData(form);
+    // Build payload expected by API
+    const payload = {
+      name: fd.get("name") || "",
+      email: fd.get("email") || "",
+      mobile: fd.get("mobile") || "",
+      state: fd.get("state") || "",
+      agree_terms: fd.get("agree_terms") === "on" || fd.get("agree_terms") === "true" || fd.get("agree_terms") === "yes" ? true : false,
+    };
+
+    // Basic client-side check: name and mobile required
+    if (!payload.name.trim()) {
+      toast.error("Please enter your name.");
+      return;
+    }
+    if (!/^\d{10}$/.test(payload.mobile)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    try {
+      const resp = await fetch("https://onlinebe.onrender.com/iec/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await resp.json().catch(() => ({}));
+
+      if (resp.status === 201) {
+        toast.success(data.message || "IEC registration received");
+        form.reset();
+      } else {
+        const msg = data?.message || data?.detail || `Submission failed (${resp.status})`;
+        toast.error(msg);
+      }
+    } catch (err) {
+      console.error("IEC submit error:", err);
+      toast.error("Network error — please check your connection.");
+    }
+  }
+
   return (
     <main className="bg-[#f3f4f6] text-gray-800">
+      <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
       <div className="container mx-auto px-4 py-8">
-
         {/* Hero / Intro */}
-        <section className="grid lg:grid-cols-2 gap-8 items-center mb-10">
+        <section className="grid lg:grid-cols-2 gap-8 items-stretch mb-10">
           {/* Left: Form */}
-          <div className="neumorph p-8 rounded-2xl shadow-lg">
+          <div className="p-8 rounded-2xl shadow-lg bg-white flex flex-col justify-center h-full">
             <h2 className="text-3xl font-bold text-center mb-6">Apply for IEC Registration</h2>
 
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            {/* <-- wired to handleSubmit, names added to inputs --> */}
+            <form className="space-y-4 flex-grow" onSubmit={handleSubmit}>
               <div>
                 <label className="block font-medium mb-1">Name *</label>
                 <input
+                  name="name"
                   type="text"
                   placeholder="Your Name"
                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -36,6 +89,7 @@ export default function IecPage() {
               <div>
                 <label className="block font-medium mb-1">Email *</label>
                 <input
+                  name="email"
                   type="email"
                   placeholder="Your Email"
                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -45,26 +99,56 @@ export default function IecPage() {
               <div>
                 <label className="block font-medium mb-1">Mobile Number *</label>
                 <input
+                  name="mobile"
                   type="text"
-                  placeholder="Your Phone Number"
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+                  placeholder="Mobile *"
+                  className="neo-inset rounded-lg px-4 py-3 w-full"
+                  aria-label="Mobile"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // keep digits only
+                  }}
                 />
               </div>
 
               <div>
                 <label className="block font-medium mb-1">Select State *</label>
-                <select className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400">
-                  <option value="">State</option>
-                  <option>Delhi</option>
+                <select name="state" className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
+                  <option value="">Select State</option>
+                  <option>Andhra Pradesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
+                  <option>Bihar</option>
+                  <option>Chhattisgarh</option>
+                  <option>Goa</option>
+                  <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jharkhand</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Madhya Pradesh</option>
                   <option>Maharashtra</option>
-                  <option>Uttar Pradesh</option>
-                  <option>West Bengal</option>
+                  <option>Manipur</option>
+                  <option>Meghalaya</option>
+                  <option>Mizoram</option>
+                  <option>Nagaland</option>
+                  <option>Odisha</option>
+                  <option>Punjab</option>
+                  <option>Rajasthan</option>
+                  <option>Sikkim</option>
                   <option>Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
                 </select>
               </div>
 
               <div className="flex items-start gap-2">
-                <input type="checkbox" className="mt-1" id="agree-terms" />
+                <input name="agree_terms" type="checkbox" className="mt-1" id="agree-terms" />
                 <label htmlFor="agree-terms" className="text-sm text-gray-600">
                   I agree to Terms & Conditions and Refund Policy.
                 </label>
@@ -80,33 +164,44 @@ export default function IecPage() {
           </div>
 
           {/* Right: Image + blurb */}
-          <div className="flex flex-col justify-center space-y-4">
-            <img
-              src="/img/iec-registration.webp"
-              alt="IEC Registration"
-              className="rounded-xl shadow-lg w-full object-cover"
-            />
-            <p className="text-gray-700 text-lg">
-              Quick, reliable and fully digital IEC registration to expand your business to global markets. Our team
-              assists end-to-end to make the process smooth and compliant.
-            </p>
+          <div className="flex flex-col justify-between p-8 rounded-2xl shadow-lg bg-white h-full">
+            <div>
+              <img
+                src="/img/iec-hero.png"
+                alt="IEC Registration"
+                className="rounded-xl shadow-lg w-full object-cover mb-6"
+              />
+              <p className="text-gray-700 text-lg mb-4">
+                Quick, reliable and fully digital IEC registration to expand your business to global markets. Our team
+                assists end-to-end to make the process smooth and compliant.
+              </p>
+              <p className="text-gray-700 text-lg">
+                With our expert support, you can focus on growing your exports while we handle all compliance and documentation.
+              </p>
+            </div>
+            <div className="text-center mt-6"></div>
           </div>
         </section>
 
         {/* What is IEC */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center mb-6">What is IEC Registration?</h2>
+          <div className="flex justify-center mb-6">
+            <h2 className="bg-[#1a2249] text-[#f5b221] text-xl md:text-2xl font-bold px-6 py-3 rounded-lg">
+              What is IEC Registration?
+            </h2>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="neumorph p-6 rounded-xl transition-transform hover:scale-102">
-              <h3 className="text-xl font-semibold mb-3">Overview</h3>
+            <div className="bg-white neumorph p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+              <h3 className="text-lg font-bold text-[#1a2249] mb-2">Q1. What is IEC Registration?</h3>
               <p className="text-gray-700">
                 IEC (Import Export Code) is a 10-digit code issued by DGFT required for import/export of goods and
                 services from India. It is a must-have for businesses dealing with international trade.
               </p>
             </div>
 
-            <div className="neumorph p-6 rounded-xl transition-transform hover:scale-102">
-              <h3 className="text-xl font-semibold mb-3">Key Points</h3>
+            <div className="bg-white neumorph p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+              <h3 className="text-lg font-bold text-[#1a2249] mb-2">Q2. What are the key points of IEC?</h3>
               <ul className="list-disc ml-5 space-y-2 text-gray-700">
                 <li>Required for customs clearance and international payments.</li>
                 <li>Enables registration with export promotion councils.</li>
@@ -119,73 +214,143 @@ export default function IecPage() {
 
         {/* Benefits */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center mb-6">Benefits of IEC Registration</h2>
+          <div className="flex justify-center mb-6">
+            <h2 className="bg-[#1a2249] text-[#f5b221] text-xl md:text-2xl font-bold px-6 py-3 rounded-lg">
+              Benefits of IEC Registration
+            </h2>
+          </div>
+
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            <div className="neumorph p-6 text-center rounded-xl">
-              <i className="fas fa-globe text-3xl text-green-400 mb-3" />
-              <h4 className="font-semibold">Access Global Markets</h4>
+            {/* Card 1 */}
+            <div className="bg-white neumorph p-6 text-center rounded-xl shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+              <i className="fas fa-globe text-4xl text-green-500 mb-4" />
+              <h4 className="font-semibold text-lg mb-2">Access Global Markets</h4>
+              <p className="text-gray-600 text-sm">
+                Expand your business reach by trading internationally without restrictions.
+              </p>
             </div>
 
-            <div className="neumorph p-6 text-center rounded-xl">
-              <i className="fas fa-file-invoice-dollar text-3xl text-blue-500 mb-3" />
-              <h4 className="font-semibold">No Monthly Compliance</h4>
+            {/* Card 2 */}
+            <div className="bg-white neumorph p-6 text-center rounded-xl shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+              <i className="fas fa-file-invoice-dollar text-4xl text-blue-500 mb-4" />
+              <h4 className="font-semibold text-lg mb-2">No Monthly Compliance</h4>
+              <p className="text-gray-600 text-sm">
+                IEC does not require monthly filings or ongoing compliance burden.
+              </p>
             </div>
 
-            <div className="neumorph p-6 text-center rounded-xl">
-              <i className="fas fa-handshake text-3xl text-green-500 mb-3" />
-              <h4 className="font-semibold">Eligibility for Export Incentives</h4>
+            {/* Card 3 */}
+            <div className="bg-white neumorph p-6 text-center rounded-xl shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+              <i className="fas fa-handshake text-4xl text-green-500 mb-4" />
+              <h4 className="font-semibold text-lg mb-2">Eligibility for Export Incentives</h4>
+              <p className="text-gray-600 text-sm">
+                Avail government schemes, subsidies, and incentives for exporters.
+              </p>
             </div>
 
-            <div className="neumorph p-6 text-center rounded-xl">
-              <i className="fas fa-check-circle text-3xl text-green-500 mb-3" />
-              <h4 className="font-semibold">Builds Credibility</h4>
+            {/* Card 4 */}
+            <div className="bg-white neumorph p-6 text-center rounded-xl shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+              <i className="fas fa-check-circle text-4xl text-green-500 mb-4" />
+              <h4 className="font-semibold text-lg mb-2">Builds Credibility</h4>
+              <p className="text-gray-600 text-sm">
+                Gain trust from international buyers with an authorized IEC registration.
+              </p>
             </div>
 
-            <div className="neumorph p-6 text-center rounded-xl">
-              <i className="fas fa-money-bill-wave text-3xl text-blue-500 mb-3" />
-              <h4 className="font-semibold">Facilitates International Transactions</h4>
+            {/* Card 5 */}
+            <div className="bg-white neumorph p-6 text-center rounded-xl shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+              <i className="fas fa-money-bill-wave text-4xl text-blue-500 mb-4" />
+              <h4 className="font-semibold text-lg mb-2">Facilitates International Transactions</h4>
+              <p className="text-gray-600 text-sm">
+                Smooth banking and payment processing for imports and exports worldwide.
+              </p>
             </div>
 
-            <div className="neumorph p-6 text-center rounded-xl">
-              <i className="fas fa-truck text-3xl text-green-400 mb-3" />
-              <h4 className="font-semibold">Easier Customs Clearance</h4>
+            {/* Card 6 */}
+            <div className="bg-white neumorph p-6 text-center rounded-xl shadow-md transform transition duration-300 hover:scale-105 hover:shadow-xl">
+              <i className="fas fa-truck text-4xl text-green-500 mb-4" />
+              <h4 className="font-semibold text-lg mb-2">Easier Customs Clearance</h4>
+              <p className="text-gray-600 text-sm">
+                Hassle-free customs clearance for import and export shipments.
+              </p>
             </div>
           </div>
         </section>
 
         {/* 4-Step Process */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center mb-6">Our 4-Step IEC Registration Process</h2>
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
-            <div className="neumorph p-6 relative rounded-xl text-center">
-              <div className="step-number">1</div>
-              <h3 className="mt-6 font-semibold">Fill Application</h3>
-              <p className="text-sm text-gray-600 mt-2">Submit your details via the form.</p>
+          <div className="flex justify-center mb-6">
+            <h2 className="bg-[#1a2249] text-[#f5b221] text-xl md:text-2xl font-bold px-6 py-3 rounded-lg">
+              Our 4-Step IEC Registration Process
+            </h2>
+          </div>
+
+          {/* Timeline / Stepper */}
+          <div className="relative flex flex-col md:flex-row items-center justify-center md:space-x-8 space-y-8 md:space-y-0">
+
+            {/* Step 1 */}
+            <div className="neumorph p-6 relative rounded-xl text-center w-64">
+              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
+                <i className="fas fa-file-alt"></i>
+              </div>
+              <h3 className="mt-4 font-semibold">Fill Application</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Submit your details via the form.
+              </p>
             </div>
 
-            <div className="neumorph p-6 relative rounded-xl text-center">
-              <div className="step-number">2</div>
-              <h3 className="mt-6 font-semibold">Callback</h3>
-              <p className="text-sm text-gray-600 mt-2">Representative will contact you to verify details.</p>
+            {/* Connector Line */}
+            <div className="hidden md:block flex-1 h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
+
+            {/* Step 2 */}
+            <div className="neumorph p-6 relative rounded-xl text-center w-64">
+              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
+                <i className="fas fa-phone-volume"></i>
+              </div>
+              <h3 className="mt-4 font-semibold">Callback</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Representative will contact you to verify details.
+              </p>
             </div>
 
-            <div className="neumorph p-6 relative rounded-xl text-center">
-              <div className="step-number">3</div>
-              <h3 className="mt-6 font-semibold">Document Upload</h3>
-              <p className="text-sm text-gray-600 mt-2">Provide documents or OTP for verification.</p>
+            {/* Connector Line */}
+            <div className="hidden md:block flex-1 h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
+
+            {/* Step 3 */}
+            <div className="neumorph p-6 relative rounded-xl text-center w-64">
+              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
+                <i className="fas fa-upload"></i>
+              </div>
+              <h3 className="mt-4 font-semibold">Document Upload</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Provide documents or OTP for verification.
+              </p>
             </div>
 
-            <div className="neumorph p-6 relative rounded-xl text-center">
-              <div className="step-number">4</div>
-              <h3 className="mt-6 font-semibold">IEC Issued</h3>
-              <p className="text-sm text-gray-600 mt-2">Receive IEC code within 3–7 business days.</p>
+            {/* Connector Line */}
+            <div className="hidden md:block flex-1 h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
+
+            {/* Step 4 */}
+            <div className="neumorph p-6 relative rounded-xl text-center w-64">
+              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
+                <i className="fas fa-certificate"></i>
+              </div>
+              <h3 className="mt-4 font-semibold">IEC Issued</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Receive IEC code within 3–7 business days.
+              </p>
             </div>
           </div>
         </section>
 
+
         {/* Why Needed */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center mb-6">Why do you need IEC?</h2>
+          <div className="flex justify-center mb-6">
+            <h2 className="bg-[#1a2249] text-[#f5b221] text-xl md:text-2xl font-bold px-6 py-3 rounded-lg">
+              Why do you need IEC?
+            </h2>
+          </div>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="neumorph p-6 rounded-xl">
               <h3 className="font-semibold mb-2">Business Compliance</h3>
@@ -207,7 +372,11 @@ export default function IecPage() {
 
         {/* FAQ */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-6">Frequently Asked Questions</h2>
+          <div className="flex justify-center mb-6">
+            <h2 className="bg-[#1a2249] text-[#f5b221] text-xl md:text-2xl font-bold px-6 py-3 rounded-lg">
+              Frequently Asked Questions
+            </h2>
+          </div>
           <div className="space-y-4 max-w-4xl mx-auto">
             {[
               { q: "Is IEC compulsory for international trade?", a: "Yes — IEC is required to import/export goods and services." },

@@ -1,66 +1,75 @@
-import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// src/pages/GstPage.jsx
+import React, { useState } from "react";
 
 export default function GstPage() {
-  // convert yyyy-mm-dd -> dd-mm-yyyy
-  function isoToDdMmYyyy(iso) {
-    if (!iso) return "";
-    const parts = iso.split("-");
-    if (parts.length !== 3) return iso;
-    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null); // { type: 'success'|'error', text: '...' }
+
+  function showToast(type, text, ms = 3500) {
+    setToast({ type, text });
+    setTimeout(() => setToast(null), ms);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    // read values directly from form (no controlled inputs)
+    if (loading) return;
     const form = e.target;
-    const fd = new FormData(form);
-
-    // convert to JSON keys expected by API
-    const payload = {
-      full_name: fd.get("full_name") || "",
-      dob: isoToDdMmYyyy(fd.get("dob") || ""), // convert date
-      business_name: fd.get("business_name") || "",
-      business_type: fd.get("business_type") || "",
-      mobile_number: fd.get("mobile_number") || "",
-      email: fd.get("email") || "",
-      pan_number: fd.get("pan_number") || "",
-      state: fd.get("state") || "",
-      district: fd.get("district") || "",
+    // collect values
+    const data = {
+      full_name: form.full_name.value.trim(),
+      dob: form.dob.value.trim(),
+      business_name: form.business_name.value.trim(),
+      business_type: form.business_type.value,
+      mobile_number: form.mobile_number.value.trim(),
+      email: form.email.value.trim(),
+      pan_number: form.pan_number.value.trim(),
+      state: form.state.value,
+      district: form.district.value.trim(),
     };
 
+    // basic validation (you can expand)
+    if (!data.full_name || !data.mobile_number || !data.business_name) {
+      showToast("error", "Please fill required fields: Name, Mobile, Business name.");
+      return;
+    }
+
     try {
-      const resp = await fetch("https://onlinebe.onrender.com/registrations/", {
+      setLoading(true);
+      const res = await fetch("https://onlinebe.onrender.com/registrations/", {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json", accept: "application/json" },
+        body: JSON.stringify(data),
       });
 
-      const data = await resp.json().catch(() => ({}));
+      const json = await res.json().catch(() => ({}));
 
-      if (resp.status === 201) {
-        // success
-        toast.success(data.message || "Registration received");
+      if (res.ok) {
+        showToast("success", json.message || "Registration received");
         form.reset();
       } else {
-        // server returned error
-        const msg = data?.message || data?.detail || `Submission failed (${resp.status})`;
-        toast.error(msg);
+        const errMsg = json.message || `Server responded with ${res.status}`;
+        showToast("error", errMsg);
       }
     } catch (err) {
-      toast.error("Network error — please check your connection.");
-      console.error("Submission error:", err);
+      showToast("error", "Network error. Please try again.");
+      // console.error(err);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <main className="text-gray-800">
-      <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
+      {/* Toast */}
+      {toast && (
+        <div
+          className={`fixed right-4 top-4 z-50 px-4 py-3 rounded shadow-lg transform transition-all
+            ${toast.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
+          role="status"
+        >
+          {toast.text}
+        </div>
+      )}
 
       {/* ✅ Logo & Title */}
       <div className="bg-[#f8fafc] flex flex-col md:flex-row justify-between items-center px-6 py-4 shadow-md">
@@ -68,19 +77,19 @@ export default function GstPage() {
           {/* <img src="img/mainLogo.png" alt="Logo" className="h-12" /> */}
         </div>
         <div className="text-center md:text-left">
-          <h3 className="text-[#0f172a] font-bold text-lg md:text-2xl">GST Registration Consultancy</h3>
-          <p className="text-gray-600 text-sm md:text-base">Fast, Secure & 100% Online GST Registration Service</p>
+          <h3 className="text-[#0f172a] font-bold text-lg md:text-2xl">
+            GST Registration Consultancy
+          </h3>
+          <p className="text-gray-600 text-sm md:text-base">
+            Fast, Secure & 100% Online GST Registration Service
+          </p>
         </div>
         <div className="mt-4 md:mt-0">
-          {
-            <img src="img/swach-bharat.jpg" className="h-14 mx-auto md:justify-self-end" alt="Swachh Bharat" />
-            /* <a
-              href="#form-section"
-              className="bg-yellow-400 text-[#0f172a] px-4 py-2 rounded font-semibold hover:bg-yellow-500 transition"
-            >
-              Apply Now
-            </a> */
-          }
+          <img
+            src="img/swach-bharat.jpg"
+            className="h-14 mx-auto md:justify-self-end"
+            alt="Swachh Bharat"
+          />
         </div>
       </div>
 
@@ -99,35 +108,43 @@ export default function GstPage() {
           in India
         </h1>
 
-        <button className="px-6 py-3 mt-6 rounded-lg font-semibold text-white bg-gradient-to-r from-[#ff6b00] to-[#ff9500] hover:from-[#ff8533] hover:to-[#ffb84d] transition-all duration-300">
-          <a href="#formsection"> Apply Now</a>
-        </button>
+        <a
+          href="#formsection"
+          className="inline-block px-6 py-3 mt-6 rounded-lg font-semibold text-white
+               bg-gradient-to-r from-[#ff6b00] to-[#ff9500]
+               hover:from-[#ff8533] hover:to-[#ffb84d]
+               transition-all duration-300"
+        >
+          Apply Now
+        </a>
       </section>
 
       {/* ✅ Form + Instructions */}
-      <div className="container mx-auto px-4 my-12 grid md:grid-cols-2 gap-8 scroll-mt-24" id="formsection">
+      <div
+        className="container mx-auto px-4 my-12 grid md:grid-cols-2 gap-8 scroll-mt-24"
+        id="formsection"
+      >
         {/* Form */}
         <div className="neo p-6 flex flex-col" id="form-section">
           <h2 className="text-3xl font-bold mb-2 text-[#0f172a]">Get GST Registration</h2>
           <p className="mb-4 text-sm">Fill this form with accurate details, and our experts will assist you end-to-end.</p>
 
-          {/* NOTE: names here match the API fields (converted in handleSubmit) */}
           <form className="space-y-4 flex-1" onSubmit={handleSubmit}>
-            <input name="full_name" type="text" placeholder="Full Name (As per PAN)" className="neo-inset w-full p-3 rounded-lg" />
+            <input name="full_name" required type="text" placeholder="Full Name (As per PAN)" className="neo-inset w-full p-3 rounded-lg" />
 
             <input name="dob" type="date" placeholder="Date of Birth" className="neo-inset w-full p-3 rounded-lg" />
 
-            <input name="business_name" type="text" placeholder="Business/Company Name" className="neo-inset w-full p-3 rounded-lg" />
+            <input name="business_name" required type="text" placeholder="Business/Company Name" className="neo-inset w-full p-3 rounded-lg" />
 
             <select name="business_type" className="neo-inset w-full p-3 rounded-lg">
-              <option>Select Business Type</option>
+              <option value="">Select Business Type</option>
               <option>Proprietorship</option>
               <option>Partnership</option>
               <option>Pvt. Ltd.</option>
               <option>LLP</option>
             </select>
 
-            <input name="mobile_number" type="text" placeholder="Mobile Number" className="neo-inset w-full p-3 rounded-lg" />
+            <input name="mobile_number" required type="text" placeholder="Mobile Number" className="neo-inset w-full p-3 rounded-lg" />
 
             <input name="email" type="email" placeholder="Email Address" className="neo-inset w-full p-3 rounded-lg" />
 
@@ -168,11 +185,16 @@ export default function GstPage() {
             <input name="district" type="text" placeholder="District" className="neo-inset w-full p-3 rounded-lg" />
 
             <label className="flex items-start gap-2 text-sm">
-              <input name="agree" type="checkbox" className="mt-1" /> I confirm all details are correct and agree to Terms.
+              <input type="checkbox" className="mt-1" /> I confirm all details are correct and agree to Terms.
             </label>
 
-            <button type="submit" className="w-full py-3 rounded-lg font-bold text-yellow-500 bg-[#1a2340] hover:bg-[#162036] transition-shadow shadow-md">
-              Submit Application
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full py-3 rounded-lg font-bold text-yellow-500 bg-[#1a2340] hover:bg-[#162036] transition-shadow shadow-md ${loading ? "opacity-60 cursor-wait" : ""
+                }`}
+            >
+              {loading ? "Submitting..." : "Submit Application"}
             </button>
           </form>
         </div>
@@ -181,15 +203,15 @@ export default function GstPage() {
         <div className="neo p-6 flex flex-col">
           <h3 className="gradient-title text-xl md:text-3xl font-bold mb-5">Instructions to Fill the Form</h3>
           <ul className="space-y-4 text-base md:text-lg leading-relaxed flex-1">
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Name must match exactly with your PAN card to avoid discrepancies.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Use a valid mobile number linked with Aadhaar for OTP verification.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Keep scanned Aadhaar, PAN, and business proof documents ready for upload.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Provide the correct incorporation or registration date for companies and LLPs.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Choose the correct business type carefully (Proprietorship, LLP, Private Limited, etc.).</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Enter the official registered business address; avoid informal addresses.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Double-check email address — OTPs and notifications will be sent there.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Review all entered details before submitting to avoid rejection or delays.</li>
-            <li><i className="fa fa-check-circle text-yellow-500 mr-2"></i> Ensure scanned documents are legible and in PDF/JPEG/PNG formats.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Name must match exactly with your PAN card to avoid discrepancies.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Use a valid mobile number linked with Aadhaar for OTP verification.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Keep scanned Aadhaar, PAN, and business proof documents ready for upload.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Provide the correct incorporation or registration date for companies and LLPs.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Choose the correct business type carefully (Proprietorship, LLP, Private Limited, etc.).</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Enter the official registered business address; avoid informal addresses.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Double-check email address — OTPs and notifications will be sent there.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Review all entered details before submitting to avoid rejection or delays.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Ensure scanned documents are legible and in PDF/JPEG/PNG formats.</li>
           </ul>
         </div>
       </div>
@@ -309,14 +331,19 @@ export default function GstPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 space-y-0">
+            {/* Column 1 */}
             <div className="space-y-4">
               <details className="neo p-4 rounded-lg">
                 <summary className="cursor-pointer font-bold">Q1. What is GST registration?</summary>
-                <p className="mt-2 text-sm">Companies have to go through this process so that they can register themselves in the GST scheme and acquire a GSTIN, a prerequisite for tax payment.</p>
+                <p className="mt-2 text-sm">
+                  Companies have to go through this process so that they can register themselves in the GST scheme and acquire a GSTIN, a prerequisite for tax payment.
+                </p>
               </details>
               <details className="neo p-4 rounded-lg">
                 <summary className="cursor-pointer font-bold">Q2. Who should register under GST?</summary>
-                <p className="mt-2 text-sm">Any entity exceeding the set turnover limit, selling online, or conducting inter-state trade must register.</p>
+                <p className="mt-2 text-sm">
+                  Any entity exceeding the set turnover limit, selling online, or conducting inter-state trade must register.
+                </p>
               </details>
               <details className="neo p-4 rounded-lg">
                 <summary className="cursor-pointer font-bold">Q3. What are the applicable turnover limits?</summary>
@@ -329,13 +356,55 @@ export default function GstPage() {
               </details>
               <details className="neo p-4 rounded-lg">
                 <summary className="cursor-pointer font-bold">Q4. Do freelancers or independent service providers require GST?</summary>
-                <p className="mt-2 text-sm">Yes, if their income is more than ₹20 lakh per year (₹10 lakh in the given states) or if they provide services state-wise.</p>
+                <p className="mt-2 text-sm">
+                  Yes, if their income is more than ₹20 lakh per year (₹10 lakh in the given states) or if they provide services state-wise.
+                </p>
               </details>
               <details className="neo p-4 rounded-lg">
                 <summary className="cursor-pointer font-bold">Q5. Are there online GST registration processes?</summary>
-                <p className="mt-2 text-sm">Absolutely. At Online Digital India, we manage everything—from document collection to application submission—entirely online.</p>
+                <p className="mt-2 text-sm">
+                  Absolutely. At Online Digital India, we manage everything—from document collection to application submission—entirely online.
+                </p>
               </details>
             </div>
+
+            {/* Column 2 */}
+            <div className="space-y-4">
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q6. How soon can I get a GSTIN?</summary>
+                <p className="mt-2 text-sm">
+                  Typically, in 3 to 7 business days, subject to the accuracy of documents and the speed of processing by the government.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q7. Can I sell on e-commerce sites without GST?</summary>
+                <p className="mt-2 text-sm">
+                  No, all platform sellers of Amazon or Flipkart should possess a valid GST registration regardless of turnover.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q8. What are the consequences of not registering for GST?</summary>
+                <p className="mt-2 text-sm">
+                  A penalty of ₹10,000 or 10% of the tax due, whichever is higher, can be imposed for default.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q9. Am I allowed to register for GST voluntarily?</summary>
+                <p className="mt-2 text-sm">
+                  Yes, voluntary registration is allowed even if you fall below the threshold. It helps in building trust and allows you to claim input tax credit.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q10. How long is the validity of a GST certificate?</summary>
+                <p className="mt-2 text-sm">
+                  <ul>
+                    <li><b>For regular business:</b> Not valid beyond surrender or cancellation</li>
+                    <li><b>For casual or non-resident suppliers:</b> 90-day validity (extendable on request)</li>
+                  </ul>
+                </p>
+              </details>
+            </div>
+          </div>
 
             <div className="space-y-4">
               <details className="neo p-4 rounded-lg">
