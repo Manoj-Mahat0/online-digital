@@ -30,9 +30,6 @@ export default function MsmePage() {
   return (
     <main className="bg-gray-100 text-gray-800">
       <div className="container mx-auto px-4 py-6">
-        <Link to="/" className="text-sm text-blue-600 mb-4 inline-block">
-          ← Back to Home
-        </Link>
 
         {/* Topbar */}
         <div className="bg-forest text-white py-2 rounded-md mb-4 hidden">

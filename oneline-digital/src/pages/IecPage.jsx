@@ -16,9 +16,6 @@ export default function IecPage() {
   return (
     <main className="bg-[#f3f4f6] text-gray-800">
       <div className="container mx-auto px-4 py-8">
-        <Link to="/" className="text-sm text-blue-600 inline-block mb-4">
-          ← Back to Home
-        </Link>
 
         {/* Hero / Intro */}
         <section className="grid lg:grid-cols-2 gap-8 items-center mb-10">
