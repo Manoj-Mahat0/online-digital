@@ -37,31 +37,42 @@ export default function MsmePage() {
         </div>
 
         {/* Header */}
-        <header className="bg-gradient-to-r from-forest to-royalpurple text-white py-8 rounded-2xl mb-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <img src="/img/mainLogo.png" alt="Logo" className="h-16 rounded-lg" />
-              <div>
-                <h5 className="text-lg md:text-xl font-semibold">
-                  सूक्ष्म, लघु और मध्यम उद्यमों पंजीकरण कंसल्टेंसी सेवा
-                </h5>
-                <h6 className="font-medium text-yellow-300">REGISTRATION CONSULTANCY FOR MSME</h6>
+        <header className="bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] text-white py-6 rounded-2xl mb-6">
+          <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-6">
+
+            {/* Left Logos */}
+            <div className="flex items-center gap-4 bg-white rounded-lg px-4 py-2">
+              <img src="/img/edigital.png" alt="e-digital" className="h-12" />
+              <img src="/img/iso.png" alt="ISO" className="h-12" />
+            </div>
+
+            {/* Center Text */}
+            <div className="text-center">
+              <h5 className="text-lg md:text-xl font-semibold">
+                सूक्ष्म, लघु और मध्यम उद्यम पंजीकरण कंसल्टेंसी सेवा
+              </h5>
+              <h6 className="font-bold text-yellow-400 uppercase">
+                REGISTRATION CONSULTANCY FOR MICRO, SMALL & MEDIUM ENTERPRISES
+              </h6>
+              <p className="text-sm italic mt-1">
+                (An ISO Certified Consultancy Private Organisation)
+              </p>
+              <div className="inline-block bg-[#D4EDDA] text-[#0B3D2E] rounded-lg px-4 py-1 mt-2 font-semibold">
+                MSME Registration Consultancy Portal / उद्यम पंजीकरण कंसल्टेंसी पोर्टल
               </div>
             </div>
-            <div className="text-center md:text-right">
-              <p className="text-sm italic">(An ISO Certified Consultancy Private Organisation)</p>
-              <div className="inline-block bg-[#D4EDDA] text-[#0B3D2E] rounded-lg px-3 py-1 mt-2 font-semibold">
-                MSME Registration Consultancy Portal
-              </div>
-            </div>
+
+            {/* Right Logo */}
             <div>
-              <img src="/img/swach-bharat.jpg" alt="Swachh Bharat" className="h-16 rounded-lg" />
+              <img src="/img/swach-bharat.png" alt="Swachh Bharat" className="h-16" />
             </div>
+
           </div>
         </header>
 
+
         {/* Nav (simple) */}
-        <nav className="bg-white rounded-lg shadow-sm mb-8">
+        {/* <nav className="bg-white rounded-lg shadow-sm mb-8">
           <div className="overflow-x-auto">
             <ul className="flex gap-2 whitespace-nowrap py-3 px-4 text-sm md:text-base">
               <li>
@@ -91,7 +102,7 @@ export default function MsmePage() {
               </li>
             </ul>
           </div>
-        </nav>
+        </nav> */}
 
         {/* Marquee */}
         <div className="bg-forest text-white py-2 px-4 rounded-lg mb-8">
