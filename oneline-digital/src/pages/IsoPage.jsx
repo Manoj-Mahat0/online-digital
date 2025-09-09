@@ -91,7 +91,7 @@ export default function IsoPage() {
                     <label className="block text-sm font-medium text-blue-800 mb-1">
                       Enquiry Type
                     </label>
-                    <select name="enquiryType" required className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
+                    <select name="enquiryType" required className="w-full px-3 py-2 text-black border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
                       <option value="">--SELECT ENQUIRY TYPE--</option>
                       <option>General</option>
                       <option>Registration</option>
@@ -103,7 +103,7 @@ export default function IsoPage() {
                     <label className="block text-sm font-medium text-blue-800 mb-1">
                       Certificate Type
                     </label>
-                    <select name="certificateType" required className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
+                    <select name="certificateType" required className="w-full px-3 py-2 text-black border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
                       <option value="">--SELECT CERTIFICATE TYPE--</option>
                       <option>ISO 9001</option>
                       <option>ISO 14001</option>
@@ -113,13 +113,13 @@ export default function IsoPage() {
 
                   {/* Applicant Name */}
                   <div>
-                    <label className="block text-sm font-medium text-blue-800 mb-1">
+                    <label className="block text-sm font-medium text-black mb-1">
                       Applicant Name *
                     </label>
                     <input
                       name="applicantName"
                       id="applicantName"
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                      className="w-full px-3 py-2 border rounded-lg text-black focus:ring-2 focus:ring-blue-400 outline-none"
                     />
                     {errors.applicantName && (
                       <p className="text-red-600 text-sm mt-1">{errors.applicantName}</p>
@@ -134,7 +134,7 @@ export default function IsoPage() {
                     <input
                       type="text"
                       placeholder="Mobile *"
-                      className="neo-inset rounded-lg px-4 py-3 w-full"
+                      className="w-full px-3 py-2 border rounded-lg text-black focus:ring-2 focus:ring-blue-400 outline-none"
                       aria-label="Mobile"
                       inputMode="numeric"   // mobile keyboard pe numeric dikhayega
                       pattern="[0-9]*"      // sirf digits allow karega
@@ -150,14 +150,14 @@ export default function IsoPage() {
 
                   {/* Email ID */}
                   <div>
-                    <label className="block text-sm font-medium text-blue-800 mb-1">
+                    <label className="block text-sm font-medium text-black mb-1">
                       Email ID
                     </label>
                     <input
                       name="email"
                       id="email"
                       type="email"
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                      className="w-full px-3 py-2 border rounded-lg text-black focus:ring-2 focus:ring-blue-400 outline-none"
                     />
                     {errors.email && (
                       <p className="text-red-600 text-sm mt-1">{errors.email}</p>

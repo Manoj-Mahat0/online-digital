@@ -107,7 +107,7 @@ export default function MsmePage() {
         {/* Marquee */}
         <div className="bg-forest text-white py-2 px-4 rounded-lg mb-8">
           <div className="text-sm">
-            MSME Registration portal is currently undergoing system upgradation by the Ministry of MSME and CBDT
+           Get your MSME registration today and unlock subsidies, loans, and growth opportunities.
           </div>
         </div>
 
@@ -134,7 +134,7 @@ export default function MsmePage() {
                 <input
                   type="text"
                   placeholder="Mobile *"
-                  className="neo-inset rounded-lg px-4 py-3 w-full"
+                  className="w-full rounded-lg p-3 border border-gray-200"
                   aria-label="Mobile"
                   inputMode="numeric"   // mobile keyboard pe numeric dikhayega
                   pattern="[0-9]*"      // sirf digits allow karega
@@ -169,12 +169,42 @@ export default function MsmePage() {
                     }}
                   />
 
-                  <select className="rounded-lg p-3 border border-gray-200">
-                    <option>Select State</option>
-                  </select>
-                  <select className="rounded-lg p-3 border border-gray-200">
-                    <option>Select District</option>
-                  </select>
+                  <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
+              <option value="">Select State</option>
+              <option>Andhra Pradesh</option>
+              <option>Arunachal Pradesh</option>
+              <option>Assam</option>
+              <option>Bihar</option>
+              <option>Chhattisgarh</option>
+              <option>Goa</option>
+              <option>Gujarat</option>
+              <option>Haryana</option>
+              <option>Himachal Pradesh</option>
+              <option>Jharkhand</option>
+              <option>Karnataka</option>
+              <option>Kerala</option>
+              <option>Madhya Pradesh</option>
+              <option>Maharashtra</option>
+              <option>Manipur</option>
+              <option>Meghalaya</option>
+              <option>Mizoram</option>
+              <option>Nagaland</option>
+              <option>Odisha</option>
+              <option>Punjab</option>
+              <option>Rajasthan</option>
+              <option>Sikkim</option>
+              <option>Tamil Nadu</option>
+              <option>Telangana</option>
+              <option>Tripura</option>
+              <option>Uttar Pradesh</option>
+              <option>Uttarakhand</option>
+              <option>West Bengal</option>
+            </select>
+                   <input
+              type="text"
+              placeholder="District"
+              className="rounded-lg p-3 border border-gray-200 w-full"
+            />
                 </div>
 
                 <select className="w-full rounded-lg p-3 border border-gray-200">
