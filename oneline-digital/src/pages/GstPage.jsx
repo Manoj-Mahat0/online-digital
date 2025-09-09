@@ -405,35 +405,6 @@ export default function GstPage() {
               </details>
             </div>
           </div>
-
-            <div className="space-y-4">
-              <details className="neo p-4 rounded-lg">
-                <summary className="cursor-pointer font-bold">Q6. How soon can I get a GSTIN?</summary>
-                <p className="mt-2 text-sm">Typically, in 3 to 7 business days, subject to the accuracy of documents and the speed of processing by the government.</p>
-              </details>
-              <details className="neo p-4 rounded-lg">
-                <summary className="cursor-pointer font-bold">Q7. Can I sell on e-commerce sites without GST?</summary>
-                <p className="mt-2 text-sm">No, all platform sellers of Amazon or Flipkart should possess a valid GST registration regardless of turnover.</p>
-              </details>
-              <details className="neo p-4 rounded-lg">
-                <summary className="cursor-pointer font-bold">Q8. What are the consequences of not registering for GST?</summary>
-                <p className="mt-2 text-sm">A penalty of ₹10,000 or 10% of the tax due, whichever is higher, can be imposed for default.</p>
-              </details>
-              <details className="neo p-4 rounded-lg">
-                <summary className="cursor-pointer font-bold">Q9. Am I allowed to register for GST voluntarily?</summary>
-                <p className="mt-2 text-sm">Yes, voluntary registration is allowed even if you fall below the threshold. It helps in building trust and allows you to claim input tax credit.</p>
-              </details>
-              <details className="neo p-4 rounded-lg">
-                <summary className="cursor-pointer font-bold">Q10. How long is the validity of a GST certificate?</summary>
-                <p className="mt-2 text-sm">
-                  <ul>
-                    <li><b>For regular business:</b> Not valid beyond surrender or cancellation</li>
-                    <li><b>For casual or non-resident suppliers:</b> 90-day validity (extendable on request)</li>
-                  </ul>
-                </p>
-              </details>
-            </div>
-          </div>
         </div>
       </section>
     </main>

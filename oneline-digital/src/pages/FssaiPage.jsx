@@ -42,13 +42,11 @@ export default function FssaiPage() {
       <div className="container mx-auto py-6">
         <div className="grid grid-cols-1 md:grid-cols-3 items-center">
           <div></div>
-
           <div className="text-center">
             <h1 className="font-bold text-xl md:text-2xl">FSSAI / FoSCoS Food License Registration</h1>
             <p className="text-sm mt-1">ISO Certified Private Consultancy</p>
             <p className="mt-1"><i className="fa-solid fa-phone"></i> Helpline: <b>+91-8448831264</b></p>
           </div>
-
           <div className="flex justify-end mt-4 md:mt-0">
             <img src="img/swach-bharat.jpg" className="h-14" alt="Swachh Bharat" />
           </div>
@@ -85,7 +83,18 @@ export default function FssaiPage() {
               <textarea name="business_address" rows="2" placeholder="Business Address *" className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Business Address"></textarea>
 
               <div className="grid md:grid-cols-3 gap-4">
-                <input name="pincode" type="text" placeholder="Pincode *" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="Pincode" />
+                <input
+                  name="pincode"
+                  type="text"
+                  placeholder="Pincode *"
+                  className="neo-inset rounded-lg px-4 py-3 w-full"
+                  aria-label="Pincode"
+                  pattern="[0-9]*"
+                  maxLength={6}
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                  }}
+                />
                 <select name="state" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="State">
                   <option value="">State *</option>
                   <option>Jharkhand</option>
@@ -97,26 +106,9 @@ export default function FssaiPage() {
                   <option>East Singhbhum</option>
                   <option>West Singhbhum</option>
                   <option>Gumla</option>
-
-                <input
-                  type="text"
-                  placeholder="Pincode *"
-                  className="rounded-lg p-3 border border-gray-200 w-full"
-                  inputMode="numeric"    // mobile pe number keypad dikhayega
-                  pattern="[0-9]*"       // sirf digits allow karega
-                  maxLength={6}          // pincode mostly 6 digit hota hai
-                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric remove
-                  }}
-                />
-
-                <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
-                  <option value="">Select State</option>
-                  <option>Andhra Pradesh</option>
-                  <option>Arunachal Pradesh</option>
-                  <option>Assam</option>
-                  <option>Bihar</option>
-                  <option>Chhattisgarh</option>
-                  <option>Goa</option>
+                </select>
+              </div>
+            </form>
           </div>
 
           {/* Instructions + FAQ */}
@@ -168,7 +160,6 @@ export default function FssaiPage() {
                   </details>
                 </div>
               </div>
-
             </div>
           </aside>
         </div>
@@ -181,7 +172,6 @@ export default function FssaiPage() {
             Types of FSSAI Licenses
           </h2>
         </div>
-
 
         <div className="grid md:grid-cols-3 gap-8">
           {[
@@ -390,9 +380,7 @@ export default function FssaiPage() {
             </div>
           ))}
         </div>
-
       </section>
-
     </main>
   );
 }

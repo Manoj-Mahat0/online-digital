@@ -123,7 +123,7 @@ export default function MsmePage() {
         {/* Marquee */}
         <div className="bg-green-800 text-white py-2 px-4 rounded-lg mb-8">
           <div className="text-sm">
-            MSME Registration portal is currently undergoing system upgradation by the Ministry of MSME and CBDT
+           Get your MSME registration today and unlock subsidies, loans, and growth opportunities.
           </div>
         </div>
 

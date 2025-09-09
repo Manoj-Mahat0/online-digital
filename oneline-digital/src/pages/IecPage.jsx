@@ -289,59 +289,64 @@ export default function IecPage() {
           <div className="relative flex flex-col md:flex-row items-center justify-center md:space-x-8 space-y-8 md:space-y-0">
 
             {/* Step 1 */}
-            <div className="neumorph p-6 relative rounded-xl text-center w-64">
-              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
-                <i className="fas fa-file-alt"></i>
+            <div className="relative w-72">
+              <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:scale-105 transition-transform relative z-10">
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-3xl shadow-lg">
+                  <i className="fas fa-file-alt"></i>
+                </div>
+                <h3 className="mt-4 font-semibold text-lg">Fill Application</h3>
+                <p className="text-sm text-gray-600 mt-2">Submit your details via the form.</p>
               </div>
-              <h3 className="mt-4 font-semibold">Fill Application</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Submit your details via the form.
-              </p>
+              {/* Connector to next */}
+              <div className="hidden md:block absolute top-1/2 right-[-50%] w-[100%] h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
             </div>
-
-            {/* Connector Line */}
-            <div className="hidden md:block flex-1 h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
 
             {/* Step 2 */}
-            <div className="neumorph p-6 relative rounded-xl text-center w-64">
-              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
-                <i className="fas fa-phone-volume"></i>
+            <div className="relative w-72">
+              <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:scale-105 transition-transform relative z-10">
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-3xl shadow-lg">
+                  <i className="fas fa-phone-volume"></i>
+                </div>
+                <h3 className="mt-4 font-semibold text-lg">Callback</h3>
+                <p className="text-sm text-gray-600 mt-2">Representative will contact you to verify details.</p>
               </div>
-              <h3 className="mt-4 font-semibold">Callback</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Representative will contact you to verify details.
-              </p>
+              <div className="hidden md:block absolute top-1/2 right-[-50%] w-[100%] h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
             </div>
-
-            {/* Connector Line */}
-            <div className="hidden md:block flex-1 h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
 
             {/* Step 3 */}
-            <div className="neumorph p-6 relative rounded-xl text-center w-64">
-              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
-                <i className="fas fa-upload"></i>
+            <div className="relative w-72">
+              <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:scale-105 transition-transform relative z-10">
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-3xl shadow-lg">
+                  <i className="fas fa-upload"></i>
+                </div>
+                <h3 className="mt-4 font-semibold text-lg">Document Upload</h3>
+                <p className="text-sm text-gray-600 mt-2">Provide documents or OTP for verification.</p>
               </div>
-              <h3 className="mt-4 font-semibold">Document Upload</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Provide documents or OTP for verification.
-              </p>
+              <div className="hidden md:block absolute top-1/2 right-[-50%] w-[100%] h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
             </div>
-
-            {/* Connector Line */}
-            <div className="hidden md:block flex-1 h-1 bg-gradient-to-r from-[#1a2249] to-[#f5b221]"></div>
 
             {/* Step 4 */}
-            <div className="neumorph p-6 relative rounded-xl text-center w-64">
-              <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl shadow-lg">
-                <i className="fas fa-certificate"></i>
+            <div className="relative w-72">
+              <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:scale-105 transition-transform relative z-10">
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-3xl shadow-lg">
+                  <i className="fas fa-certificate"></i>
+                </div>
+                <h3 className="mt-4 font-semibold text-lg">IEC Issued</h3>
+                <p className="text-sm text-gray-600 mt-2">Receive IEC code within 3–7 business days.</p>
               </div>
-              <h3 className="mt-4 font-semibold">IEC Issued</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Receive IEC code within 3–7 business days.
-              </p>
             </div>
+
+            {/* Mobile vertical lines */}
+            <div className="absolute md:hidden flex flex-col items-center w-full">
+              <div className="h-12 w-1 bg-gradient-to-b from-[#1a2249] to-[#f5b221]"></div>
+              <div className="h-12 w-1 bg-gradient-to-b from-[#1a2249] to-[#f5b221] mt-28"></div>
+              <div className="h-12 w-1 bg-gradient-to-b from-[#1a2249] to-[#f5b221] mt-28"></div>
+            </div>
+
           </div>
         </section>
+
+
 
 
         {/* Why Needed */}
@@ -351,17 +356,28 @@ export default function IecPage() {
               Why do you need IEC?
             </h2>
           </div>
+
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="neumorph p-6 rounded-xl">
-              <h3 className="font-semibold mb-2">Business Compliance</h3>
-              <p className="text-gray-700">
-                IEC ensures compliance with trade regulations and allows your business to legally trade internationally.
+            {/* Card 1: Business Compliance */}
+            <div className="neumorph p-6 rounded-xl shadow-md hover:scale-105 transition-transform">
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl mx-auto mb-4 shadow-lg">
+                <i className="fas fa-briefcase"></i>
+              </div>
+              <h3 className="font-semibold mb-2 text-2xl text-center">Business Compliance</h3>
+              <p className="text-gray-700 text-center">
+                An IEC (Import Export Code) is mandatory for anyone who wants to start an import or export business in India.
+                It enables you to expand your products and services into international markets, establish global connections,
+                and grow your business without limitations. Without an IEC, you cannot carry out cross-border trade legally.
               </p>
             </div>
 
-            <div className="neumorph p-6 rounded-xl">
-              <h3 className="font-semibold mb-2">Benefits</h3>
-              <ul className="list-disc ml-5 space-y-2 text-gray-700">
+            {/* Card 2: Benefits */}
+            <div className="neumorph p-6 rounded-xl shadow-md hover:scale-105 transition-transform">
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#1a2249] text-[#f5b221] text-2xl mx-auto mb-4 shadow-lg">
+                <i className="fas fa-gift"></i>
+              </div>
+              <h3 className="font-semibold mb-2 text-2xl text-center">Benefits</h3>
+              <ul className="list-disc ml-5 space-y-2 text-gray-700 ">
                 <li>Required for import & export transactions.</li>
                 <li>Helps establish credibility with partners.</li>
                 <li>Essential for export incentives and easier customs clearance.</li>
@@ -370,38 +386,89 @@ export default function IecPage() {
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="mb-16">
-          <div className="flex justify-center mb-6">
-            <h2 className="bg-[#1a2249] text-[#f5b221] text-xl md:text-2xl font-bold px-6 py-3 rounded-lg">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          <div className="space-y-4 max-w-4xl mx-auto">
-            {[
-              { q: "Is IEC compulsory for international trade?", a: "Yes — IEC is required to import/export goods and services." },
-              { q: "Can individuals apply for IEC?", a: "Yes — individuals can apply using PAN and Aadhaar." },
-              { q: "How long does IEC registration take?", a: "Usually issued within 3–7 business days." },
-              { q: "Is IEC renewable?", a: "No — IEC is issued for lifetime and does not require renewal." },
-            ].map((item, idx) => (
-              <div key={idx} className="neumorph p-4 rounded-xl">
-                <button
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full text-left flex justify-between items-center"
-                >
-                  <span className="font-semibold">{item.q}</span>
-                  <span>{faqOpen[idx] ? "−" : "+"}</span>
-                </button>
-                {faqOpen[idx] && <p className="mt-3 text-gray-700">{item.a}</p>}
-              </div>
-            ))}
-          </div>
-        </section>
 
-        {/* Minimal footer note (page-level only, header/footer are provided by App) */}
-        <footer className="text-center text-sm text-gray-600 py-6">
-          © {new Date().getFullYear()} Online Digital India. All rights reserved.
-        </footer>
+        {/* FAQ */}
+      <section className="py-12">
+  <div className="container mx-auto">
+    <div className="text-center">
+      <h2 className="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] 
+           px-6 py-3 rounded-lg mb-6 shadow-lg shadow-indigo-500/50">
+        Frequently Asked Questions
+      </h2>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-6 space-y-0">
+      {/* Column 1 */}
+      <div className="space-y-4">
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q1. Is IEC compulsory for international trade?</summary>
+          <p className="mt-2 text-sm">
+            Yes, both the import and export of products and services require it.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q2. Can individuals apply for IEC?</summary>
+          <p className="mt-2 text-sm">
+            Yes, they can apply on the strength of their PAN and Aadhaar.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q3. Can I apply for an IEC without having a registered business?</summary>
+          <p className="mt-2 text-sm">
+            Yes, individuals can apply for IEC using their PAN and Aadhaar, even without a registered business entity.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q4. How long does the registration take?</summary>
+          <p className="mt-2 text-sm">
+            It usually takes 2–3 working days through eDigital.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q5. Do digital exports like IT services or freelancing require an IEC?</summary>
+          <p className="mt-2 text-sm">
+            Yes, accepting payments from overseas customers is required.
+          </p>
+        </details>
+      </div>
+
+      {/* Column 2 */}
+      <div className="space-y-4">
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q6. Can I modify my IEC details after registration?</summary>
+          <p className="mt-2 text-sm">
+            Yes, you can use the DGFT portal to change your IEC information, including your address, email, and phone number.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q7. Is GST mandatory for IEC registration?</summary>
+          <p className="mt-2 text-sm">
+            No, to receive IEC, GST is not required. However, for some kinds of enterprises, it might be necessary.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q8. Can one person or entity have more than one IEC?</summary>
+          <p className="mt-2 text-sm">
+            No, only one IEC is issued per PAN number. Duplicate IECs are not allowed.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q9. What if I don't use my IEC?</summary>
+          <p className="mt-2 text-sm">
+            Non-use does not entail any penalty. Nevertheless, DGFT necessitates annual updating of IEC details online, whether unused or not.
+          </p>
+        </details>
+        <details className="neo p-4 rounded-lg">
+          <summary className="cursor-pointer font-bold">Q10. Do I require a digital signature to file an IEC?</summary>
+          <p className="mt-2 text-sm">
+            Digital signatures (DSCs) are not required for individuals. Aadhaar-based OTP authentication can also be used for filing.
+          </p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
       </div>
     </main>
   );
