@@ -5,14 +5,14 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-// Landing sections (components you already created)
+// Landing sections
 import Hero from "./components/Hero";
 import Success from "./components/Success";
 import Services from "./components/Services";
 import WhyUs from "./components/WhyUs";
 import Testimonials from "./components/Testimonials";
 
-// Service pages (simple placeholders you will fill later)
+// Service pages
 import GstPage from "./pages/GstPage";
 import GemPage from "./pages/GemPage";
 import FssaiPage from "./pages/FssaiPage";
@@ -20,13 +20,21 @@ import IsoPage from "./pages/IsoPage";
 import IecPage from "./pages/IecPage";
 import MsmePage from "./pages/MsmePage";
 
+// Admin Panel components
+import AdminLayout from "./admin/AdminLayout";
+import Dashboard from "./admin/Dashboard";
+import GstAdmin from "./admin/GstAdmin";
+// import FssaiAdmin from "./admin/FssaiAdmin";
+
 // Optional 404
 function NotFound() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-8">
       <div className="text-center neo rounded-xl p-8">
         <h2 className="text-2xl font-bold mb-2">Page not found</h2>
-        <p className="text-sm text-gray-600">Sorry, the page you're looking for doesn't exist.</p>
+        <p className="text-sm text-gray-600">
+          Sorry, the page you're looking for doesn't exist.
+        </p>
       </div>
     </div>
   );
@@ -38,7 +46,7 @@ export default function App() {
       <Header />
 
       <Routes>
-        {/* Landing page at / */}
+        {/* Landing page */}
         <Route
           path="/"
           element={
@@ -59,6 +67,20 @@ export default function App() {
         <Route path="/iso" element={<IsoPage />} />
         <Route path="/iec" element={<IecPage />} />
         <Route path="/msme" element={<MsmePage />} />
+
+        {/* Admin routes */}
+        <Route
+          path="/admin"
+          element={<AdminLayout><Dashboard /></AdminLayout>}
+        />
+        <Route
+          path="/admin/gst"
+          element={<AdminLayout><GstAdmin /></AdminLayout>}
+        />
+        {/* <Route
+          path="/admin/fssai"
+          element={<AdminLayout><FssaiAdmin /></AdminLayout>}
+        /> */}
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

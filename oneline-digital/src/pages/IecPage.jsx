@@ -21,7 +21,7 @@ export default function IecPage() {
         <section className="grid lg:grid-cols-2 gap-8 items-center mb-10">
           {/* Left: Form */}
           <div className="neumorph p-8 rounded-2xl shadow-lg">
-            <h2 className="text-2xl font-bold text-center mb-6">Apply for IEC Registration</h2>
+            <h2 className="text-3xl font-bold text-center mb-6">Apply for IEC Registration</h2>
 
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
               <div>
@@ -72,9 +72,9 @@ export default function IecPage() {
 
               <button
                 type="submit"
-                className="btn-gradient w-full py-3 rounded-lg text-white font-semibold hover:scale-105 transition"
+                className="w-full py-3 rounded-lg font-bold text-yellow-500 bg-[#1a2340] hover:bg-[#162036] transition-shadow shadow-md"
               >
-                Get Started
+                Submit Application
               </button>
             </form>
           </div>
