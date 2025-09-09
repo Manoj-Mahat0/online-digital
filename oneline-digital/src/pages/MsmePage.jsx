@@ -121,7 +121,7 @@ export default function MsmePage() {
         </header>
 
         {/* Marquee */}
-        <div className="bg-forest text-white py-2 px-4 rounded-lg mb-8">
+        <div className="bg-green-800 text-white py-2 px-4 rounded-lg mb-8">
           <div className="text-sm">
             MSME Registration portal is currently undergoing system upgradation by the Ministry of MSME and CBDT
           </div>
