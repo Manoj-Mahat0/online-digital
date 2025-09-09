@@ -109,36 +109,36 @@ export default function GstPage() {
               className="neo-inset w-full p-3 rounded-lg"
             />
             <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
-                  <option value="">Select State</option>
-                  <option>Andhra Pradesh</option>
-                  <option>Arunachal Pradesh</option>
-                  <option>Assam</option>
-                  <option>Bihar</option>
-                  <option>Chhattisgarh</option>
-                  <option>Goa</option>
-                  <option>Gujarat</option>
-                  <option>Haryana</option>
-                  <option>Himachal Pradesh</option>
-                  <option>Jharkhand</option>
-                  <option>Karnataka</option>
-                  <option>Kerala</option>
-                  <option>Madhya Pradesh</option>
-                  <option>Maharashtra</option>
-                  <option>Manipur</option>
-                  <option>Meghalaya</option>
-                  <option>Mizoram</option>
-                  <option>Nagaland</option>
-                  <option>Odisha</option>
-                  <option>Punjab</option>
-                  <option>Rajasthan</option>
-                  <option>Sikkim</option>
-                  <option>Tamil Nadu</option>
-                  <option>Telangana</option>
-                  <option>Tripura</option>
-                  <option>Uttar Pradesh</option>
-                  <option>Uttarakhand</option>
-                  <option>West Bengal</option>
-                </select>
+              <option value="">Select State</option>
+              <option>Andhra Pradesh</option>
+              <option>Arunachal Pradesh</option>
+              <option>Assam</option>
+              <option>Bihar</option>
+              <option>Chhattisgarh</option>
+              <option>Goa</option>
+              <option>Gujarat</option>
+              <option>Haryana</option>
+              <option>Himachal Pradesh</option>
+              <option>Jharkhand</option>
+              <option>Karnataka</option>
+              <option>Kerala</option>
+              <option>Madhya Pradesh</option>
+              <option>Maharashtra</option>
+              <option>Manipur</option>
+              <option>Meghalaya</option>
+              <option>Mizoram</option>
+              <option>Nagaland</option>
+              <option>Odisha</option>
+              <option>Punjab</option>
+              <option>Rajasthan</option>
+              <option>Sikkim</option>
+              <option>Tamil Nadu</option>
+              <option>Telangana</option>
+              <option>Tripura</option>
+              <option>Uttar Pradesh</option>
+              <option>Uttarakhand</option>
+              <option>West Bengal</option>
+            </select>
             <input
               type="text"
               placeholder="District"
@@ -338,81 +338,81 @@ export default function GstPage() {
             </h2>
           </div>
 
-         <div className="grid md:grid-cols-2 gap-6 space-y-0">
-  {/* Column 1 */}
-  <div className="space-y-4">
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q1. What is GST registration?</summary>
-      <p className="mt-2 text-sm">
-        Companies have to go through this process so that they can register themselves in the GST scheme and acquire a GSTIN, a prerequisite for tax payment.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q2. Who should register under GST?</summary>
-      <p className="mt-2 text-sm">
-        Any entity exceeding the set turnover limit, selling online, or conducting inter-state trade must register.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q3. What are the applicable turnover limits?</summary>
-      <p className="mt-2 text-sm">
-        <ul>
-          <li><b>For goods:</b> ₹40 lakh (₹10 lakh for northeastern/special states)</li>
-          <li>₹20 lakh for services (₹10 lakh in certain states)</li>
-        </ul>
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q4. Do freelancers or independent service providers require GST?</summary>
-      <p className="mt-2 text-sm">
-        Yes, if their income is more than ₹20 lakh per year (₹10 lakh in the given states) or if they provide services state-wise.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q5. Are there online GST registration processes?</summary>
-      <p className="mt-2 text-sm">
-        Absolutely. At Online Digital India, we manage everything—from document collection to application submission—entirely online.
-      </p>
-    </details>
-  </div>
+          <div className="grid md:grid-cols-2 gap-6 space-y-0">
+            {/* Column 1 */}
+            <div className="space-y-4">
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q1. What is GST registration?</summary>
+                <p className="mt-2 text-sm">
+                  Companies have to go through this process so that they can register themselves in the GST scheme and acquire a GSTIN, a prerequisite for tax payment.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q2. Who should register under GST?</summary>
+                <p className="mt-2 text-sm">
+                  Any entity exceeding the set turnover limit, selling online, or conducting inter-state trade must register.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q3. What are the applicable turnover limits?</summary>
+                <p className="mt-2 text-sm">
+                  <ul>
+                    <li><b>For goods:</b> ₹40 lakh (₹10 lakh for northeastern/special states)</li>
+                    <li>₹20 lakh for services (₹10 lakh in certain states)</li>
+                  </ul>
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q4. Do freelancers or independent service providers require GST?</summary>
+                <p className="mt-2 text-sm">
+                  Yes, if their income is more than ₹20 lakh per year (₹10 lakh in the given states) or if they provide services state-wise.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q5. Are there online GST registration processes?</summary>
+                <p className="mt-2 text-sm">
+                  Absolutely. At Online Digital India, we manage everything—from document collection to application submission—entirely online.
+                </p>
+              </details>
+            </div>
 
-  {/* Column 2 */}
-  <div className="space-y-4">
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q6. How soon can I get a GSTIN?</summary>
-      <p className="mt-2 text-sm">
-        Typically, in 3 to 7 business days, subject to the accuracy of documents and the speed of processing by the government.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q7. Can I sell on e-commerce sites without GST?</summary>
-      <p className="mt-2 text-sm">
-        No, all platform sellers of Amazon or Flipkart should possess a valid GST registration regardless of turnover.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q8. What are the consequences of not registering for GST?</summary>
-      <p className="mt-2 text-sm">
-        A penalty of ₹10,000 or 10% of the tax due, whichever is higher, can be imposed for default.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q9. Am I allowed to register for GST voluntarily?</summary>
-      <p className="mt-2 text-sm">
-        Yes, voluntary registration is allowed even if you fall below the threshold. It helps in building trust and allows you to claim input tax credit.
-      </p>
-    </details>
-    <details className="neo p-4 rounded-lg">
-      <summary className="cursor-pointer font-bold">Q10. How long is the validity of a GST certificate?</summary>
-      <p className="mt-2 text-sm">
-        <ul>
-          <li><b>For regular business:</b> Not valid beyond surrender or cancellation</li>
-          <li><b>For casual or non-resident suppliers:</b> 90-day validity (extendable on request)</li>
-        </ul>
-      </p>
-    </details>
-  </div>
-</div>
+            {/* Column 2 */}
+            <div className="space-y-4">
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q6. How soon can I get a GSTIN?</summary>
+                <p className="mt-2 text-sm">
+                  Typically, in 3 to 7 business days, subject to the accuracy of documents and the speed of processing by the government.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q7. Can I sell on e-commerce sites without GST?</summary>
+                <p className="mt-2 text-sm">
+                  No, all platform sellers of Amazon or Flipkart should possess a valid GST registration regardless of turnover.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q8. What are the consequences of not registering for GST?</summary>
+                <p className="mt-2 text-sm">
+                  A penalty of ₹10,000 or 10% of the tax due, whichever is higher, can be imposed for default.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q9. Am I allowed to register for GST voluntarily?</summary>
+                <p className="mt-2 text-sm">
+                  Yes, voluntary registration is allowed even if you fall below the threshold. It helps in building trust and allows you to claim input tax credit.
+                </p>
+              </details>
+              <details className="neo p-4 rounded-lg">
+                <summary className="cursor-pointer font-bold">Q10. How long is the validity of a GST certificate?</summary>
+                <p className="mt-2 text-sm">
+                  <ul>
+                    <li><b>For regular business:</b> Not valid beyond surrender or cancellation</li>
+                    <li><b>For casual or non-resident suppliers:</b> 90-day validity (extendable on request)</li>
+                  </ul>
+                </p>
+              </details>
+            </div>
+          </div>
 
         </div>
       </section>

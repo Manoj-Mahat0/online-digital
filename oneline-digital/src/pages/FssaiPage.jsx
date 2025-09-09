@@ -92,18 +92,42 @@ export default function FssaiPage() {
                   className="neo-inset rounded-lg px-4 py-3 w-full"
                   aria-label="Pincode"
                 />
-                <select className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="State">
-                  <option value="">State *</option>
-                  <option>Jharkhand</option>
+                 <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
+                  <option value="">Select State</option>
+                  <option>Andhra Pradesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
                   <option>Bihar</option>
-                  <option>Delhi</option>
+                  <option>Chhattisgarh</option>
+                  <option>Goa</option>
+                  <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jharkhand</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Maharashtra</option>
+                  <option>Manipur</option>
+                  <option>Meghalaya</option>
+                  <option>Mizoram</option>
+                  <option>Nagaland</option>
+                  <option>Odisha</option>
+                  <option>Punjab</option>
+                  <option>Rajasthan</option>
+                  <option>Sikkim</option>
+                  <option>Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
                 </select>
-                <select className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="District">
-                  <option value="">District *</option>
-                  <option>East Singhbhum</option>
-                  <option>West Singhbhum</option>
-                  <option>Gumla</option>
-                </select>
+               <input
+              type="text"
+              placeholder="District"
+              className="neo-inset w-full p-3 rounded-lg"
+            />
               </div>
 
               <input type="file" className="w-full neo-inset rounded-lg px-4 py-2" aria-label="Upload documents" />
