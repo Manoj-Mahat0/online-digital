@@ -97,9 +97,10 @@ export default function MsmePage() {
         {/* Topbar (kept as-is) */}
         <div className="bg-forest text-white py-2 rounded-md mb-4 hidden"></div>
 
+
         {/* Header */}
-        <header className="bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] text-white py-6 rounded-2xl mb-6">
-          <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-6">
+        <header className="w-full bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] text-white py-6 mb-6 rounded-none">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 px-6">
             <div className="flex items-center gap-4 bg-white rounded-lg px-4 py-2">
               <img src="/img/edigital.png" alt="e-digital" className="h-12" />
               <img src="/img/iso.png" alt="ISO" className="h-12" />
@@ -107,7 +108,9 @@ export default function MsmePage() {
 
             <div className="text-center">
               <h5 className="text-lg md:text-xl font-semibold">सूक्ष्म, लघु और मध्यम उद्यम पंजीकरण कंसल्टेंसी सेवा</h5>
-              <h6 className="font-bold text-yellow-400 uppercase">REGISTRATION CONSULTANCY FOR MICRO, SMALL & MEDIUM ENTERPRISES</h6>
+              <h6 className="font-bold text-yellow-400 uppercase">
+                REGISTRATION CONSULTANCY FOR MICRO, SMALL & MEDIUM ENTERPRISES
+              </h6>
               <p className="text-sm italic mt-1">(An ISO Certified Consultancy Private Organisation)</p>
               <div className="inline-block bg-[#D4EDDA] text-[#0B3D2E] rounded-lg px-4 py-1 mt-2 font-semibold">
                 MSME Registration Consultancy Portal / उद्यम पंजीकरण कंसल्टेंसी पोर्टल
@@ -120,18 +123,25 @@ export default function MsmePage() {
           </div>
         </header>
 
+
         {/* Marquee */}
-        <div className="bg-green-800 text-white py-2 px-4 rounded-lg mb-8">
-          <div className="text-sm">
-           Get your MSME registration today and unlock subsidies, loans, and growth opportunities.
+        <div className="bg-green-800 text-white py-2 px-4 mb-8 marquee rounded-lg">
+          <div className="text-sm marquee__inner">
+            Get your MSME registration today and unlock subsidies, loans, and growth opportunities.
           </div>
         </div>
 
+
         {/* Hero */}
-        <section className="text-center bg-gradient-to-r from-forest to-royalpurple text-white py-10 rounded-2xl mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">Udyam Aadhar Registration | MSME Registration Online</h1>
-          <p className="text-lg md:text-xl">Fast, secure, and professional MSME registration consultancy services.</p>
+        <section className="text-center bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] text-white py-10 rounded-2xl mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+            Udyam Aadhar Registration | MSME Registration Online
+          </h1>
+          <p className="text-lg md:text-xl">
+            Fast, secure, and professional MSME registration consultancy services.
+          </p>
         </section>
+
 
         {/* Form + Info */}
         <section id="formSection" className="mb-12">
@@ -233,7 +243,10 @@ export default function MsmePage() {
                   <label htmlFor="agree" className="text-sm">I agree to the Terms of Service</label>
                 </div>
 
-                <button type="submit" className="w-full py-3 bg-royalpurple text-yellow-300 font-bold rounded-lg hover:bg-forest transition">
+                <button type="submit" className="w-full py-3 bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] 
+             text-yellow-300 font-bold rounded-lg 
+             hover:from-[#502c6d] hover:to-[#0a3c2f] 
+             transition duration-300">
                   SUBMIT APPLICATION
                 </button>
               </form>
@@ -241,8 +254,8 @@ export default function MsmePage() {
 
             {/* Right: Instructions */}
             <aside className="bg-white rounded-2xl p-6 shadow-neu">
-              <h3 className="text-2xl font-bold text-forest mb-4">READ THE INSTRUCTIONS TO FILL MSME REGISTRATION FORM</h3>
-              <div className="space-y-3 text-gray-700">
+              <h3 className="text-3xl font-bold text-forest mb-4">READ THE INSTRUCTIONS TO FILL MSME REGISTRATION FORM</h3>
+              <div className="space-y-3 text-gray-700 text-xl">
                 <p><strong>APPLICANT NAME</strong>: Applicant should enter their full name.</p>
                 <p><strong>MOBILE NUMBER</strong>: Enter the correct mobile number without +91.</p>
                 <p><strong>EMAIL ID</strong>: Fill the correct email ID to receive acknowledgement.</p>
@@ -259,15 +272,24 @@ export default function MsmePage() {
         </section>
 
         {/* What is MSME */}
-        <section className="py-12 bg-white rounded-2xl mb-12">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-forest mb-4">What is MSME?</h2>
-            <p className="text-lg text-gray-700">
-              Micro, Small and Medium Enterprises (MSME) are the backbone of the Indian economy. These enterprises are
-              registered under the Udyam Registration Portal and enjoy benefits like government schemes, subsidies, and easier credit access.
+        <section className="py-16 bg-gradient-to-br from-[#f9fafb] to-[#eef2ff] rounded-2xl mb-12 shadow-lg">
+          <div className="text-center max-w-3xl mx-auto px-6">
+            <h2 className="text-4xl font-extrabold mb-6 bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] bg-clip-text text-transparent">
+              What is MSME?
+            </h2>
+
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+              <span className="font-semibold text-[#0a3c2f]">Micro, Small and Medium Enterprises (MSME)</span>
+              are the backbone of the Indian economy. These enterprises are registered under the{" "}
+              <span className="font-medium text-[#502c6d]">Udyam Registration Portal</span>
+              and enjoy benefits like government schemes, subsidies, and easier credit access.
             </p>
+
+            {/* Decorative bottom border / highlight */}
+            <div className="mt-8 w-24 h-1 bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] mx-auto rounded-full"></div>
           </div>
         </section>
+
 
         {/* Benefits */}
         <section className="py-12 mb-12">
