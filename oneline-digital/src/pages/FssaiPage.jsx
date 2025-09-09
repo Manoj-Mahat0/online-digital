@@ -1,33 +1,56 @@
-// src/pages/FssaiPage.jsx
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function FssaiPage() {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const formEl = e.target;
+    const fd = new FormData(formEl);
+
+    // Ensure checkbox yields true/false string as in curl
+    // If checkbox not checked, FormData.get will be null — we want false
+    if (!fd.has("agreed_terms")) fd.append("agreed_terms", "false");
+
+    try {
+      const resp = await fetch("https://onlinebe.onrender.com/fssai/", {
+        method: "POST",
+        // DO NOT set Content-Type — browser will set multipart/form-data boundary
+        body: fd,
+      });
+
+      const data = await resp.json().catch(() => ({}));
+
+      if (resp.status === 201) {
+        toast.success(data.message || "FSSAI application received");
+        formEl.reset();
+      } else {
+        const msg = data?.message || data?.detail || `Submission failed (${resp.status})`;
+        toast.error(msg);
+      }
+    } catch (err) {
+      console.error("FSSAI submit error:", err);
+      toast.error("Network error — please check your connection.");
+    }
+  }
+
   return (
     <main className="bg-[#f9fbfd] text-gray-800">
+      <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
+
       {/* ✅ Logo & Info */}
       <div className="container mx-auto py-6">
         <div className="grid grid-cols-1 md:grid-cols-3 items-center">
-          {/* Empty div for left spacing */}
           <div></div>
 
-          {/* Center Info Section */}
           <div className="text-center">
-            <h1 className="font-bold text-xl md:text-2xl">
-              FSSAI / FoSCoS Food License Registration
-            </h1>
+            <h1 className="font-bold text-xl md:text-2xl">FSSAI / FoSCoS Food License Registration</h1>
             <p className="text-sm mt-1">ISO Certified Private Consultancy</p>
-            <p className="mt-1">
-              <i className="fa-solid fa-phone"></i> Helpline: <b>+91-8448831264</b>
-            </p>
+            <p className="mt-1"><i className="fa-solid fa-phone"></i> Helpline: <b>+91-8448831264</b></p>
           </div>
 
-          {/* Right Image */}
           <div className="flex justify-end mt-4 md:mt-0">
-            <img
-              src="img/swach-bharat.jpg"
-              className="h-14"
-              alt="Swachh Bharat"
-            />
+            <img src="img/swach-bharat.jpg" className="h-14" alt="Swachh Bharat" />
           </div>
         </div>
       </div>
@@ -41,64 +64,35 @@ export default function FssaiPage() {
               <h3 className="text-center text-3xl font-semibold">Apply for FSSAI Registration</h3>
             </div>
 
-            <form className="space-y-4 flex-1">
-              <input
-                type="text"
-                placeholder="Applicant Name *"
-                className="w-full neo-inset rounded-lg px-4 py-3"
-                aria-label="Applicant Name"
-              />
+            {/* NOTE: names match API fields; verification_code removed */}
+            <form className="space-y-4 flex-1" onSubmit={handleSubmit} encType="multipart/form-data">
+              <input name="applicant_name" type="text" placeholder="Applicant Name *" className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Applicant Name" />
 
               <div className="grid md:grid-cols-2 gap-4">
-                <input
-                  type="email"
-                  placeholder="Email *"
-                  className="neo-inset rounded-lg px-4 py-3 w-full"
-                  aria-label="Email"
-                />
-                <input
-                  type="text"
-                  placeholder="Mobile *"
-                  className="neo-inset rounded-lg px-4 py-3 w-full"
-                  aria-label="Mobile"
-                />
+                <input name="email" type="email" placeholder="Email *" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="Email" />
+                <input name="mobile_number" type="text" placeholder="Mobile *" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="Mobile" />
               </div>
 
-              <input
-                type="text"
-                placeholder="Business / Company Name *"
-                className="w-full neo-inset rounded-lg px-4 py-3"
-                aria-label="Business Name"
-              />
+              <input name="business_name" type="text" placeholder="Business / Company Name *" className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Business Name" />
 
-              <select className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Food Category">
+              <select name="food_category" className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Food Category">
                 <option value="">Select Food Category *</option>
                 <option>Restaurant</option>
                 <option>Food Manufacturer</option>
                 <option>Retailer</option>
               </select>
 
-              <textarea
-                rows="2"
-                placeholder="Business Address *"
-                className="w-full neo-inset rounded-lg px-4 py-3"
-                aria-label="Business Address"
-              ></textarea>
+              <textarea name="business_address" rows="2" placeholder="Business Address *" className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Business Address"></textarea>
 
               <div className="grid md:grid-cols-3 gap-4">
-                <input
-                  type="text"
-                  placeholder="Pincode *"
-                  className="neo-inset rounded-lg px-4 py-3 w-full"
-                  aria-label="Pincode"
-                />
-                <select className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="State">
+                <input name="pincode" type="text" placeholder="Pincode *" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="Pincode" />
+                <select name="state" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="State">
                   <option value="">State *</option>
                   <option>Jharkhand</option>
                   <option>Bihar</option>
                   <option>Delhi</option>
                 </select>
-                <select className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="District">
+                <select name="district" className="neo-inset rounded-lg px-4 py-3 w-full" aria-label="District">
                   <option value="">District *</option>
                   <option>East Singhbhum</option>
                   <option>West Singhbhum</option>
@@ -106,31 +100,16 @@ export default function FssaiPage() {
                 </select>
               </div>
 
-              <input type="file" className="w-full neo-inset rounded-lg px-4 py-2" aria-label="Upload documents" />
+              <input name="file" type="file" className="w-full neo-inset rounded-lg px-4 py-2" aria-label="Upload documents" />
 
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" className="rounded" aria-label="Agree to terms" />
+                <input name="agreed_terms" type="checkbox" className="rounded" aria-label="Agree to terms" defaultValue="true" />
                 I agree to Terms
               </label>
 
-              <input
-                type="text"
-                placeholder="Verification Code *"
-                className="w-full neo-inset rounded-lg px-4 py-3"
-                aria-label="Verification Code"
-              />
+              <input name="additional_notes" type="text" placeholder="Additional Notes (Optional)" className="w-full neo-inset rounded-lg px-4 py-3" aria-label="Additional Notes" />
 
-              <textarea
-                rows="2"
-                placeholder="Additional Notes (Optional)"
-                className="w-full neo-inset rounded-lg px-4 py-3"
-                aria-label="Additional Notes"
-              ></textarea>
-
-              <button
-                type="submit"
-                className="w-full py-3 mt-4 bg-blue-800 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg"
-              >
+              <button type="submit" className="w-full py-3 mt-4 bg-blue-800 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg">
                 Submit
               </button>
             </form>
@@ -160,52 +139,28 @@ export default function FssaiPage() {
 
                 <div className="mt-4 space-y-3">
                   <details className="bg-white shadow-md rounded-lg p-4 transition-all duration-300">
-                    <summary className="font-medium cursor-pointer flex items-center">
-                      Q1. What is FSSAI registration?
-                    </summary>
-                    <p className="mt-2 text-sm text-gray-600">
-                      Operators of food businesses must obtain certification from the Food Safety and
-                      Standards Authority of India (FSSAI) in order to comply with food safety regulations.
-                    </p>
+                    <summary className="font-medium cursor-pointer flex items-center">Q1. What is FSSAI registration?</summary>
+                    <p className="mt-2 text-sm text-gray-600">Operators of food businesses must obtain certification from the Food Safety and Standards Authority of India (FSSAI) in order to comply with food safety regulations.</p>
                   </details>
 
                   <details className="bg-white shadow-md rounded-lg p-4 transition-all duration-300">
-                    <summary className="font-medium cursor-pointer flex items-center">
-                      Q2. Who needs an FSSAI registration certificate?
-                    </summary>
-                    <p className="mt-2 text-sm text-gray-600">
-                      Any person or business involved in food manufacturing, processing, storage, or sale needs an
-                      FSSAI registration certificate.
-                    </p>
+                    <summary className="font-medium cursor-pointer flex items-center">Q2. Who needs an FSSAI registration certificate?</summary>
+                    <p className="mt-2 text-sm text-gray-600">Any person or business involved in food manufacturing, processing, storage, or sale needs an FSSAI registration certificate.</p>
                   </details>
 
                   <details className="bg-white shadow-md rounded-lg p-4 transition-all duration-300">
-                    <summary className="font-medium cursor-pointer flex items-center">
-                      Q3. How do I get an FSSAI registration certificate?
-                    </summary>
-                    <p className="mt-2 text-sm text-gray-600">
-                      You can get in touch with Online Digital India or apply for an FSSAI certificate online via
-                      the FSSAI Portal.
-                    </p>
+                    <summary className="font-medium cursor-pointer flex items-center">Q3. How do I get an FSSAI registration certificate?</summary>
+                    <p className="mt-2 text-sm text-gray-600">You can get in touch with Online Digital India or apply for an FSSAI certificate online via the FSSAI Portal.</p>
                   </details>
 
                   <details className="bg-white shadow-md rounded-lg p-4 transition-all duration-300">
-                    <summary className="font-medium cursor-pointer flex items-center">
-                      Q4. What documents are required for FSSAI registration?
-                    </summary>
-                    <p className="mt-2 text-sm text-gray-600">
-                      A photo, identification, proof of address, and information about the food business are
-                      examples of basic paperwork.
-                    </p>
+                    <summary className="font-medium cursor-pointer flex items-center">Q4. What documents are required for FSSAI registration?</summary>
+                    <p className="mt-2 text-sm text-gray-600">A photo, identification, proof of address, and information about the food business are examples of basic paperwork.</p>
                   </details>
 
                   <details className="bg-white shadow-md rounded-lg p-4 transition-all duration-300">
-                    <summary className="font-medium cursor-pointer flex items-center">
-                      Q5. How long is the FSSAI certificate or license valid?
-                    </summary>
-                    <p className="mt-2 text-sm text-gray-600">
-                      The FSSAI license must be renewed before its expiration and is valid for one to five years.
-                    </p>
+                    <summary className="font-medium cursor-pointer flex items-center">Q5. How long is the FSSAI certificate or license valid?</summary>
+                    <p className="mt-2 text-sm text-gray-600">The FSSAI license must be renewed before its expiration and is valid for one to five years.</p>
                   </details>
                 </div>
               </div>
