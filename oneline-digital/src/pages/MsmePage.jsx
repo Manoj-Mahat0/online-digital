@@ -133,10 +133,16 @@ export default function MsmePage() {
                 />
                 <input
                   type="text"
-                  className="w-full rounded-lg p-3 border border-gray-200"
-                  placeholder="Mobile Number *"
-                  required
+                  placeholder="Mobile *"
+                  className="neo-inset rounded-lg px-4 py-3 w-full"
+                  aria-label="Mobile"
+                  inputMode="numeric"   // mobile keyboard pe numeric dikhayega
+                  pattern="[0-9]*"      // sirf digits allow karega
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
+                  }}
                 />
+
                 <input
                   type="email"
                   className="w-full rounded-lg p-3 border border-gray-200"
@@ -151,7 +157,18 @@ export default function MsmePage() {
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <input className="rounded-lg p-3 border border-gray-200" placeholder="Pincode *" />
+                  <input
+                    type="text"
+                    placeholder="Pincode *"
+                    className="rounded-lg p-3 border border-gray-200 w-full"
+                    inputMode="numeric"    // mobile pe number keypad dikhayega
+                    pattern="[0-9]*"       // sirf digits allow karega
+                    maxLength={6}          // pincode mostly 6 digit hota hai
+                    onInput={(e) => {
+                      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric remove
+                    }}
+                  />
+
                   <select className="rounded-lg p-3 border border-gray-200">
                     <option>Select State</option>
                   </select>

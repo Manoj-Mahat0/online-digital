@@ -132,10 +132,17 @@ export default function IsoPage() {
                       Mobile Number *
                     </label>
                     <input
-                      name="mobileNumber"
-                      id="mobileNumber"
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+                      type="text"
+                      placeholder="Mobile *"
+                      className="neo-inset rounded-lg px-4 py-3 w-full"
+                      aria-label="Mobile"
+                      inputMode="numeric"   // mobile keyboard pe numeric dikhayega
+                      pattern="[0-9]*"      // sirf digits allow karega
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
+                      }}
                     />
+
                     {errors.mobileNumber && (
                       <p className="text-red-600 text-sm mt-1">{errors.mobileNumber}</p>
                     )}

@@ -95,9 +95,16 @@ export default function GstPage() {
             </select>
             <input
               type="text"
-              placeholder="Mobile Number"
-              className="neo-inset w-full p-3 rounded-lg"
+              placeholder="Mobile *"
+              className="neo-inset rounded-lg px-4 py-3 w-full"
+              aria-label="Mobile"
+              inputMode="numeric"   // mobile keyboard pe numeric dikhayega
+              pattern="[0-9]*"      // sirf digits allow karega
+              onInput={(e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
+              }}
             />
+
             <input
               type="email"
               placeholder="Email Address"

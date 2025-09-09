@@ -105,8 +105,16 @@ export default function GemPage() {
                 <label className="font-semibold">Mobile Number *</label>
                 <input
                   type="text"
-                  className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none"
+                  placeholder="Mobile *"
+                  className="neo-inset rounded-lg px-4 py-3 w-full"
+                  aria-label="Mobile"
+                  inputMode="numeric"   // mobile keyboard pe numeric dikhayega
+                  pattern="[0-9]*"      // sirf digits allow karega
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
+                  }}
                 />
+
               </div>
               <div>
                 <label className="font-semibold">Date of Birth *</label>
@@ -315,7 +323,7 @@ export default function GemPage() {
       {/* Popular Product Categories */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-<div className="flex justify-center">
+          <div className="flex justify-center">
             <div className="inline-block">
               <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">
                 Popular Product Categories
@@ -383,45 +391,45 @@ export default function GemPage() {
       </section>
 
       {/* Why Choose Us */}
-     <section className="py-12 bg-white">
-  <div className="container mx-auto px-4">
-    {/* Heading */}
-    <div className="flex justify-center">
-      <div className="inline-block">
-        <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">
-          Why Choose Us?
-        </h4>
-      </div>
-    </div>
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          {/* Heading */}
+          <div className="flex justify-center">
+            <div className="inline-block">
+              <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">
+                Why Choose Us?
+              </h4>
+            </div>
+          </div>
 
-    {/* Features Grid */}
-    <div className="grid md:grid-cols-3 gap-6 mt-6">
-      <div className="neo p-6 rounded-xl text-center">
-        <i className="fa-solid fa-shield-halved text-teal-600 text-4xl mb-3"></i>
-        <h6 className="font-bold text-lg">Trusted Service</h6>
-        <p className="text-sm mt-2">
-          Secure and reliable consultancy for all GEM registrations.
-        </p>
-      </div>
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-6 mt-6">
+            <div className="neo p-6 rounded-xl text-center">
+              <i className="fa-solid fa-shield-halved text-teal-600 text-4xl mb-3"></i>
+              <h6 className="font-bold text-lg">Trusted Service</h6>
+              <p className="text-sm mt-2">
+                Secure and reliable consultancy for all GEM registrations.
+              </p>
+            </div>
 
-      <div className="neo p-6 rounded-xl text-center">
-        <i className="fa-solid fa-bolt text-teal-600 text-4xl mb-3"></i>
-        <h6 className="font-bold text-lg">Quick Processing</h6>
-        <p className="text-sm mt-2">
-          Fast & hassle-free application with expert support.
-        </p>
-      </div>
+            <div className="neo p-6 rounded-xl text-center">
+              <i className="fa-solid fa-bolt text-teal-600 text-4xl mb-3"></i>
+              <h6 className="font-bold text-lg">Quick Processing</h6>
+              <p className="text-sm mt-2">
+                Fast & hassle-free application with expert support.
+              </p>
+            </div>
 
-      <div className="neo p-6 rounded-xl text-center">
-        <i className="fa-solid fa-headset text-teal-600 text-4xl mb-3"></i>
-        <h6 className="font-bold text-lg">24/7 Assistance</h6>
-        <p className="text-sm mt-2">
-          Our support team is always available to help you.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+            <div className="neo p-6 rounded-xl text-center">
+              <i className="fa-solid fa-headset text-teal-600 text-4xl mb-3"></i>
+              <h6 className="font-bold text-lg">24/7 Assistance</h6>
+              <p className="text-sm mt-2">
+                Our support team is always available to help you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       {/* FAQ */}
@@ -430,39 +438,39 @@ export default function GemPage() {
           <div className="flex justify-center">
             <div className="inline-block">
               <h4 className="bg-teal-600 text-white text-2xl py-3 px-6 rounded-3xl shadow mb-4 text-center">
-               FAQs – GEM Registration
+                FAQs – GEM Registration
               </h4>
             </div>
           </div>
-           <div className="space-y-4">
-        <details className="neo p-4 rounded-xl">
-          <summary className="font-semibold cursor-pointer">Q1. Who can register on the GEM portal?</summary>
-          <p className="mt-2 text-sm">Any company can register to sell to government buyers, whether they are merchants,
-            manufacturers, or service providers.</p>
-        </details>
-        <details className="neo p-4 rounded-xl">
-          <summary className="font-semibold cursor-pointer">Q2. Why should businesses register on the GEM portal?</summary>
-          <p className="mt-2 text-sm">It gives businesses access to government buyers, faster payments, and increased
-            credibility through transparent procurement.</p>
-        </details>
-        <details className="neo p-4 rounded-xl">
-          <summary className="font-semibold cursor-pointer">Q3. Do I need GST to register on GEM?</summary>
-          <p className="mt-2 text-sm">While it’s not mandatory for all, having a GST number improves your credibility and
-            allows access to more opportunities.</p>
-        </details>
-        <details className="neo p-4 rounded-xl">
-          <summary className="font-semibold cursor-pointer">Q4. How long does it take to complete the GEM registration
-            process?</summary>
-          <p className="mt-2 text-sm">Typically, it takes 3–7 working days once all documents are correctly submitted.</p>
-        </details>
-        <details className="neo p-4 rounded-xl">
-          <summary className="font-semibold cursor-pointer">Q5. Why should businesses register on the GEM portal?</summary>
-          <p className="mt-2 text-sm">
-            Registering on the GEM portal enables businesses to connect with a vast network of government buyers, enjoy
-            transparent procurement processes, receive faster payments, and enhance their credibility in the public
-            sector market.</p>
-        </details>
-      </div>
+          <div className="space-y-4">
+            <details className="neo p-4 rounded-xl">
+              <summary className="font-semibold cursor-pointer">Q1. Who can register on the GEM portal?</summary>
+              <p className="mt-2 text-sm">Any company can register to sell to government buyers, whether they are merchants,
+                manufacturers, or service providers.</p>
+            </details>
+            <details className="neo p-4 rounded-xl">
+              <summary className="font-semibold cursor-pointer">Q2. Why should businesses register on the GEM portal?</summary>
+              <p className="mt-2 text-sm">It gives businesses access to government buyers, faster payments, and increased
+                credibility through transparent procurement.</p>
+            </details>
+            <details className="neo p-4 rounded-xl">
+              <summary className="font-semibold cursor-pointer">Q3. Do I need GST to register on GEM?</summary>
+              <p className="mt-2 text-sm">While it’s not mandatory for all, having a GST number improves your credibility and
+                allows access to more opportunities.</p>
+            </details>
+            <details className="neo p-4 rounded-xl">
+              <summary className="font-semibold cursor-pointer">Q4. How long does it take to complete the GEM registration
+                process?</summary>
+              <p className="mt-2 text-sm">Typically, it takes 3–7 working days once all documents are correctly submitted.</p>
+            </details>
+            <details className="neo p-4 rounded-xl">
+              <summary className="font-semibold cursor-pointer">Q5. Why should businesses register on the GEM portal?</summary>
+              <p className="mt-2 text-sm">
+                Registering on the GEM portal enables businesses to connect with a vast network of government buyers, enjoy
+                transparent procurement processes, receive faster payments, and enhance their credibility in the public
+                sector market.</p>
+            </details>
+          </div>
         </div>
       </section>
     </main>

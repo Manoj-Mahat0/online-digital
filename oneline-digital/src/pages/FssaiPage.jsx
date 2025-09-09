@@ -61,7 +61,13 @@ export default function FssaiPage() {
                   placeholder="Mobile *"
                   className="neo-inset rounded-lg px-4 py-3 w-full"
                   aria-label="Mobile"
+                  inputMode="numeric"   // mobile keyboard pe numeric dikhayega
+                  pattern="[0-9]*"      // sirf digits allow karega
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
+                  }}
                 />
+
               </div>
 
               <input
@@ -89,10 +95,16 @@ export default function FssaiPage() {
                 <input
                   type="text"
                   placeholder="Pincode *"
-                  className="neo-inset rounded-lg px-4 py-3 w-full"
-                  aria-label="Pincode"
+                  className="rounded-lg p-3 border border-gray-200 w-full"
+                  inputMode="numeric"    // mobile pe number keypad dikhayega
+                  pattern="[0-9]*"       // sirf digits allow karega
+                  maxLength={6}          // pincode mostly 6 digit hota hai
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric remove
+                  }}
                 />
-                 <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
+
+                <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
                   <option value="">Select State</option>
                   <option>Andhra Pradesh</option>
                   <option>Arunachal Pradesh</option>
@@ -123,11 +135,11 @@ export default function FssaiPage() {
                   <option>Uttarakhand</option>
                   <option>West Bengal</option>
                 </select>
-               <input
-              type="text"
-              placeholder="District"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
+                <input
+                  type="text"
+                  placeholder="District"
+                  className="neo-inset w-full p-3 rounded-lg"
+                />
               </div>
 
               <input type="file" className="w-full neo-inset rounded-lg px-4 py-2" aria-label="Upload documents" />
@@ -354,109 +366,109 @@ export default function FssaiPage() {
       </section>
 
       {/* Process + Who needs */}
-<section className="py-12 container mx-auto px-4">
-  {/* Process Heading */}
-  <div className="flex justify-center mb-10">
-    <h2 className="bg-[#003566] text-white text-3xl font-semibold py-3 px-6 rounded-lg shadow">
-      FSSAI Registration Process
-    </h2>
-  </div>
-
-  {/* Process Flow */}
-  <div className="relative grid md:grid-cols-4 gap-8">
-    {/* Connector Line */}
-    <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-800 hidden md:block"></div>
-
-    {[
-      {
-        icon: "fas fa-file-alt",
-        title: "Step 1: Application",
-        desc: "Submit your enquiry form with required details.",
-      },
-      {
-        icon: "fas fa-id-card",
-        title: "Step 2: Verification",
-        desc: "Our experts review your documents and process.",
-      },
-      {
-        icon: "fas fa-credit-card",
-        title: "Step 3: Payment",
-        desc: "Make the applicable fee payment for your license.",
-      },
-      {
-        icon: "fas fa-certificate",
-        title: "Step 4: Certification",
-        desc: "Receive your FSSAI certificate officially.",
-      },
-    ].map((step, i) => (
-      <div
-        key={i}
-        className="relative neu rounded-2xl p-6 text-center bg-white z-10 hover:scale-105 transition-transform duration-300"
-      >
-        <div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-[#ff6b00] text-white text-2xl shadow-lg">
-          <i className={step.icon}></i>
+      <section className="py-12 container mx-auto px-4">
+        {/* Process Heading */}
+        <div className="flex justify-center mb-10">
+          <h2 className="bg-[#003566] text-white text-3xl font-semibold py-3 px-6 rounded-lg shadow">
+            FSSAI Registration Process
+          </h2>
         </div>
-        <h6 className="font-semibold mb-2">{step.title}</h6>
-        <p className="text-gray-600 text-sm">{step.desc}</p>
-      </div>
-    ))}
-  </div>
 
-  {/* Who Needs Heading */}
-<div className="flex justify-center mb-10">
-  <h2 className="bg-[#003566] text-white text-3xl font-semibold py-3 px-6 rounded-lg shadow my-8">
-    Who Needs an FSSAI License?
-  </h2>
-</div>
+        {/* Process Flow */}
+        <div className="relative grid md:grid-cols-4 gap-8">
+          {/* Connector Line */}
+          <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-800 hidden md:block"></div>
 
-{/* Who Needs Cards */}
-<div className="grid md:grid-cols-3 gap-8">
-  {[
-    {
-      icon: "fas fa-utensils",
-      title: "Restaurants & Cafes",
-      desc: "All eateries, cloud kitchens, cafes, and hotels must obtain FSSAI license.",
-    },
-    {
-      icon: "fas fa-store",
-      title: "Retailers & Wholesalers",
-      desc: "Shops, supermarkets, and wholesale dealers need registration.",
-    },
-    {
-      icon: "fas fa-industry",
-      title: "Food Manufacturers",
-      desc: "Businesses involved in processing and packaging must have FSSAI license.",
-    },
-    {
-      icon: "fas fa-truck",
-      title: "Distributors",
-      desc: "Distributors, cold storage, and transporters require registration.",
-    },
-    {
-      icon: "fas fa-concierge-bell",
-      title: "Vendors & Caterers",
-      desc: "Street food vendors, caterers, and stalls must register.",
-    },
-    {
-      icon: "fas fa-globe",
-      title: "Exporters & Importers",
-      desc: "Businesses importing/exporting food must get Central License.",
-    },
-  ].map((item, i) => (
-    <div
-      key={i}
-      className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-xl transition-shadow duration-300"
-    >
-      <div className="text-4xl text-orange-500 mb-4">
-        <i className={item.icon}></i>
-      </div>
-      <h5 className="font-semibold text-[#003566] text-lg mb-2">{item.title}</h5>
-      <p className="text-gray-600 text-sm">{item.desc}</p>
-    </div>
-  ))}
-</div>
+          {[
+            {
+              icon: "fas fa-file-alt",
+              title: "Step 1: Application",
+              desc: "Submit your enquiry form with required details.",
+            },
+            {
+              icon: "fas fa-id-card",
+              title: "Step 2: Verification",
+              desc: "Our experts review your documents and process.",
+            },
+            {
+              icon: "fas fa-credit-card",
+              title: "Step 3: Payment",
+              desc: "Make the applicable fee payment for your license.",
+            },
+            {
+              icon: "fas fa-certificate",
+              title: "Step 4: Certification",
+              desc: "Receive your FSSAI certificate officially.",
+            },
+          ].map((step, i) => (
+            <div
+              key={i}
+              className="relative neu rounded-2xl p-6 text-center bg-white z-10 hover:scale-105 transition-transform duration-300"
+            >
+              <div className="flex items-center justify-center w-14 h-14 mx-auto mb-4 rounded-full bg-[#ff6b00] text-white text-2xl shadow-lg">
+                <i className={step.icon}></i>
+              </div>
+              <h6 className="font-semibold mb-2">{step.title}</h6>
+              <p className="text-gray-600 text-sm">{step.desc}</p>
+            </div>
+          ))}
+        </div>
 
-</section>
+        {/* Who Needs Heading */}
+        <div className="flex justify-center mb-10">
+          <h2 className="bg-[#003566] text-white text-3xl font-semibold py-3 px-6 rounded-lg shadow my-8">
+            Who Needs an FSSAI License?
+          </h2>
+        </div>
+
+        {/* Who Needs Cards */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: "fas fa-utensils",
+              title: "Restaurants & Cafes",
+              desc: "All eateries, cloud kitchens, cafes, and hotels must obtain FSSAI license.",
+            },
+            {
+              icon: "fas fa-store",
+              title: "Retailers & Wholesalers",
+              desc: "Shops, supermarkets, and wholesale dealers need registration.",
+            },
+            {
+              icon: "fas fa-industry",
+              title: "Food Manufacturers",
+              desc: "Businesses involved in processing and packaging must have FSSAI license.",
+            },
+            {
+              icon: "fas fa-truck",
+              title: "Distributors",
+              desc: "Distributors, cold storage, and transporters require registration.",
+            },
+            {
+              icon: "fas fa-concierge-bell",
+              title: "Vendors & Caterers",
+              desc: "Street food vendors, caterers, and stalls must register.",
+            },
+            {
+              icon: "fas fa-globe",
+              title: "Exporters & Importers",
+              desc: "Businesses importing/exporting food must get Central License.",
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="text-4xl text-orange-500 mb-4">
+                <i className={item.icon}></i>
+              </div>
+              <h5 className="font-semibold text-[#003566] text-lg mb-2">{item.title}</h5>
+              <p className="text-gray-600 text-sm">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+      </section>
 
     </main>
   );
