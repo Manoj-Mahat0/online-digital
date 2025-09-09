@@ -53,7 +53,7 @@ export default function IsoPage() {
       <div className="container mx-auto px-4 py-8">
 
         {/* Hero */}
-       <section className="w-full bg-blue-800 p-8 text-white mb-8">
+       <section className="w-full bg-blue-500 rounded-xl p-8 text-white mb-8">
   <div className="md:flex md:items-center md:gap-8">
     {/* Left Content */}
     <div className="md:flex-1">
@@ -80,7 +80,7 @@ export default function IsoPage() {
 
     {/* Right: Enquiry form */}
     <div id="formSection" className="md:w-5/12 mt-6 md:mt-0">
-      <div className="bg-white p-6 rounded-xl shadow-[8px_8px_16px_#cfd8e3,-8px_-8px_16px_#ffffff]">
+      <div className="bg-white p-6 rounded-xl ">
         <h2 className="text-center text-blue-900 font-bold text-xl mb-4">
           ENQUIRY FORM
         </h2>

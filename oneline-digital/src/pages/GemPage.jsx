@@ -8,7 +8,7 @@ export default function GemPage() {
         <div className="container mx-auto grid grid-cols-3 items-center gap-4 px-4">
           {/* Left Logo */}
           <div>
-            <img src="img/mainLogo.png" alt="Logo" className="h-16 mx-auto" />
+            {/* <img src="img/mainLogo.png" alt="Logo" className="h-16 mx-auto" /> */}
           </div>
           {/* Center Title */}
           <div className="text-center">
@@ -151,11 +151,34 @@ export default function GemPage() {
                 <label className="font-semibold">State *</label>
                 <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
                   <option value="">Select State</option>
-                  <option>Delhi</option>
-                  <option>Maharashtra</option>
+                  <option>Andhra Pradesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
+                  <option>Bihar</option>
+                  <option>Chhattisgarh</option>
+                  <option>Goa</option>
+                  <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jharkhand</option>
                   <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Maharashtra</option>
+                  <option>Manipur</option>
+                  <option>Meghalaya</option>
+                  <option>Mizoram</option>
+                  <option>Nagaland</option>
+                  <option>Odisha</option>
+                  <option>Punjab</option>
+                  <option>Rajasthan</option>
+                  <option>Sikkim</option>
+                  <option>Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
                   <option>Uttar Pradesh</option>
-                  <option>Other</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
                 </select>
               </div>
               <div>

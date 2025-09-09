@@ -7,11 +7,11 @@ export default function FssaiPage() {
       {/* ✅ Logo & Info */}
       <div className="container mx-auto py-6 text-center">
         <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-          <img
+          {/* <img
             src="img/mainLogo.png"
             className="h-16 mx-auto md:mx-0"
             alt="Logo"
-          />
+          /> */}
           <div>
             <h1 className="font-bold">
               FSSAI / FoSCoS Food License Registration
@@ -30,96 +30,7 @@ export default function FssaiPage() {
         </div>
       </div>
 
-      {/* Hero: Form + Instructions */}
-      <div className="container mx-auto px-4 py-10 lg:grid lg:grid-cols-2 gap-8 items-stretch">
-        {/* Form */}
-        <div className="neu rounded-2xl p-6 flex flex-col">
-          <div className="bg-[#003566] text-white rounded-lg py-4 px-6 mb-6">
-            <h3 className="text-center text-lg font-semibold">
-              Apply for FSSAI Registration
-            </h3>
-          </div>
-          <form className="space-y-4 flex-1 flex flex-col">
-            <input
-              type="text"
-              placeholder="Applicant Name *"
-              className="w-full neu-inset rounded-lg px-4 py-2"
-            />
-            <div className="grid md:grid-cols-2 gap-4">
-              <input
-                type="email"
-                placeholder="Email *"
-                className="neu-inset rounded-lg px-4 py-2 w-full"
-              />
-              <input
-                type="text"
-                placeholder="Mobile *"
-                className="neu-inset rounded-lg px-4 py-2 w-full"
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="Business / Company Name *"
-              className="w-full neu-inset rounded-lg px-4 py-2"
-            />
-            <select className="w-full neu-inset rounded-lg px-4 py-2">
-              <option>Select Food Category *</option>
-              <option>Restaurant</option>
-              <option>Food Manufacturer</option>
-              <option>Retailer</option>
-            </select>
-            <textarea
-              rows="2"
-              placeholder="Business Address *"
-              className="w-full neu-inset rounded-lg px-4 py-2"
-            ></textarea>
-            <div className="grid md:grid-cols-3 gap-4">
-              <input
-                type="text"
-                placeholder="Pincode *"
-                className="neu-inset rounded-lg px-4 py-2 w-full"
-              />
-              <select className="neu-inset rounded-lg px-4 py-2 w-full">
-                <option>State *</option>
-                <option>Jharkhand</option>
-                <option>Bihar</option>
-                <option>Delhi</option>
-              </select>
-              <select className="neu-inset rounded-lg px-4 py-2 w-full">
-                <option>District *</option>
-                <option>East Singhbhum</option>
-                <option>West Singhbhum</option>
-                <option>Gumla</option>
-              </select>
-            </div>
-            <input
-              type="file"
-              className="w-full neu-inset rounded-lg px-4 py-2"
-            />
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="neu-inset rounded" /> I agree to
-              Terms
-            </label>
-            <input
-              type="text"
-              placeholder="Verification Code *"
-              className="w-full neu-inset rounded-lg px-4 py-2"
-            />
-            <textarea
-              rows="2"
-              placeholder="Additional Notes (Optional)"
-              className="w-full neu-inset rounded-lg px-4 py-2"
-            ></textarea>
-
-            <button
-              type="submit"
-              className="gradient-btn text-white font-semibold w-full py-2 rounded-lg shadow-md hover:scale-105 transition mt-2"
-            >
-              Submit Application
-            </button>
-          </form>
-        </div>
-      </div>
+     
 
       {/* Form + Instructions */}
       <section className="container mx-auto px-4 py-8 lg:py-12">
