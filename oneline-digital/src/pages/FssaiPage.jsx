@@ -3,6 +3,32 @@ import React from "react";
 export default function FssaiPage() {
   return (
     <main className="bg-[#f9fbfd] text-gray-800">
+      {/* ✅ Logo & Info */}
+      <div className="container mx-auto py-6 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
+          <img
+            src="img/mainLogo.png"
+            className="h-16 mx-auto md:mx-0"
+            alt="Logo"
+          />
+          <div>
+            <h1 className="font-bold">
+              FSSAI / FoSCoS Food License Registration
+            </h1>
+            <p className="text-sm">ISO Certified Private Consultancy</p>
+            <p>
+              <i className="fa-solid fa-phone"></i> Helpline:{" "}
+              <b>+91-8448831264</b>
+            </p>
+          </div>
+          <img
+            src="img/swach-bharat.jpg"
+            className="h-14 mx-auto md:justify-self-end"
+            alt="Swachh Bharat"
+          />
+        </div>
+      </div>
+
       {/* Hero: Form + Instructions */}
       <div className="container mx-auto px-4 py-10 lg:grid lg:grid-cols-2 gap-8 items-stretch">
         {/* Form */}
@@ -102,15 +128,33 @@ export default function FssaiPage() {
           </div>
           <div className="flex-1 flex flex-col justify-between">
             <div className="mt-4 text-lg space-y-2">
-              <p>✅ <b>Applicant Name:</b> Enter the correct business name.</p>
-              <p>✅ <b>Email ID:</b> Use valid email ID.</p>
-              <p>✅ <b>Business Name:</b> Ensure spelling correctness.</p>
-              <p>✅ <b>Mobile:</b> Enter Indian mobile number.</p>
-              <p>✅ <b>Business Type:</b> Select from dropdown.</p>
-              <p>✅ <b>Address:</b> Enter accurate details.</p>
-              <p>✅ <b>Pincode:</b> Enter correct postal code.</p>
-              <p>✅ <b>State:</b> Select business state.</p>
-              <p>✅ <b>District:</b> Select correct district.</p>
+              <p>
+                <b>Applicant Name:</b> Enter the correct business name.
+              </p>
+              <p>
+                <b>Email ID:</b> Use valid email ID.
+              </p>
+              <p>
+                <b>Business Name:</b> Ensure spelling correctness.
+              </p>
+              <p>
+                <b>Mobile:</b> Enter Indian mobile number.
+              </p>
+              <p>
+                <b>Business Type:</b> Select from dropdown.
+              </p>
+              <p>
+                <b>Address:</b> Enter accurate details.
+              </p>
+              <p>
+                <b>Pincode:</b> Enter correct postal code.
+              </p>
+              <p>
+                <b>State:</b> Select business state.
+              </p>
+              <p>
+                <b>District:</b> Select correct district.
+              </p>
             </div>
 
             <div>
@@ -123,42 +167,46 @@ export default function FssaiPage() {
                     Q1. What is FSSAI registration?
                   </summary>
                   <p className="mt-2 text-sm">
-                    Food businesses must obtain FSSAI certification to comply
-                    with food safety laws.
+                    Operators of food businesses must obtain certification from
+                    the Food Safety and Standards Authority of India (FSSAI) in
+                    order to comply with food safety regulations.
                   </p>
                 </details>
                 <details className="neu-inset rounded-lg p-3">
                   <summary className="font-medium">
-                    Q2. Who needs an FSSAI registration?
+                    Q2. Who needs an FSSAI registration certificate?
                   </summary>
                   <p className="mt-2 text-sm">
-                    Anyone in food manufacturing, storage, processing, or sales
-                    needs it.
+                    Any person or business involved in food manufacturing,
+                    processing, storage, or sale needs an FSSAI registration
+                    certificate.
                   </p>
                 </details>
                 <details className="neu-inset rounded-lg p-3">
                   <summary className="font-medium">
-                    Q3. How do I get it?
+                    Q3. How do I get an FSSAI registration certificate?
                   </summary>
                   <p className="mt-2 text-sm">
-                    Apply online through FSSAI Portal or contact Online Digital
-                    India.
+                    You can get in touch with Online Digital India or apply for
+                    an FSSAI certificate online via the FSSAI Portal.
                   </p>
                 </details>
                 <details className="neu-inset rounded-lg p-3">
                   <summary className="font-medium">
-                    Q4. What documents are needed?
+                    Q4. What documents are required for FSSAI registration?
                   </summary>
                   <p className="mt-2 text-sm">
-                    Photo, ID proof, address proof, and food business details.
+                    A photo, identification, proof of address, and information
+                    about the food business are examples of basic paperwork.
                   </p>
                 </details>
                 <details className="neu-inset rounded-lg p-3">
                   <summary className="font-medium">
-                    Q5. Validity of FSSAI license?
+                    Q5. How long is the FSSAI certificate or license valid?
                   </summary>
                   <p className="mt-2 text-sm">
-                    It is valid for 1 to 5 years and must be renewed.
+                    The FSSAI license must be renewed before its expiration and
+                    is valid for one to five years.
                   </p>
                 </details>
               </div>
@@ -184,53 +232,82 @@ export default function FssaiPage() {
             <div className="text-5xl mb-4">🏬</div>
             <h5 className="text-xl font-semibold">State License</h5>
             <p className="text-gray-600 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              For mid-sized businesses with ₹12L – ₹20Cr turnover, valid within one state.
+              For mid-sized businesses with ₹12L – ₹20Cr turnover, valid within
+              one state.
             </p>
           </div>
           <div className="neu rounded-2xl p-8 text-center hover:scale-105 transition cursor-pointer group relative overflow-hidden">
             <div className="text-5xl mb-4">🏢</div>
             <h5 className="text-xl font-semibold">Central License</h5>
             <p className="text-gray-600 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              Required for large/multi-state operations with turnover above ₹20 Cr.
+              Required for large/multi-state operations with turnover above ₹20
+              Cr.
             </p>
           </div>
         </div>
       </section>
 
       {/* Benefits */}
-      <section className="py-16 bg-[#f9fbfd]">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center text-[#003566] mb-10">
-            Benefits of FSSAI Certificate
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="neu rounded-2xl p-6">
-              <h3 className="font-semibold mb-2">✅ Builds Customer Trust</h3>
-              <p>Displaying FSSAI license shows your food is safe & compliant.</p>
-            </div>
-            <div className="neu rounded-2xl p-6">
-              <h3 className="font-semibold mb-2">✅ Legal Protection</h3>
-              <p>Meets food safety laws & reduces penalties.</p>
-            </div>
-            <div className="neu rounded-2xl p-6">
-              <h3 className="font-semibold mb-2">✅ Govt Loans & Subsidies</h3>
-              <p>Registered businesses get govt schemes & benefits.</p>
-            </div>
-            <div className="neu rounded-2xl p-6">
-              <h3 className="font-semibold mb-2">✅ National Recognition</h3>
-              <p>Boosts credibility across India.</p>
-            </div>
-            <div className="neu rounded-2xl p-6">
-              <h3 className="font-semibold mb-2">✅ Business Expansion</h3>
-              <p>Expand business across states without restriction.</p>
-            </div>
-            <div className="neu rounded-2xl p-6">
-              <h3 className="font-semibold mb-2">✅ Right to Use Logo</h3>
-              <p>Use FSSAI logo on packaging for better trust.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <section className="py-16 bg-[#f9fbfd]">
+  <div className="container mx-auto">
+    <h2 className="text-3xl font-bold text-center text-[#003566] mb-10">
+      Benefits of FSSAI Certificate
+    </h2>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* ✅ Card 1 */}
+      <div className="rounded-2xl p-6 bg-[#f9fbfd] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:scale-105 transition-transform duration-300">
+        <h3 className="font-semibold mb-2 text-[#003566]">✅ Builds Customer Trust</h3>
+        <p className="text-gray-600">
+          Displaying your FSSAI license shows customers that your food is safe
+          and compliant, creating confidence and loyalty.
+        </p>
+      </div>
+
+      {/* ✅ Card 2 */}
+      <div className="rounded-2xl p-6 bg-[#f9fbfd] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:scale-105 transition-transform duration-300">
+        <h3 className="font-semibold mb-2 text-[#003566]">✅ Legal Protection</h3>
+        <p className="text-gray-600">
+          FSSAI certificate helps you meet food safety laws, reducing risk of
+          penalties or legal action.
+        </p>
+      </div>
+
+      {/* ✅ Card 3 */}
+      <div className="rounded-2xl p-6 bg-[#f9fbfd] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:scale-105 transition-transform duration-300">
+        <h3 className="font-semibold mb-2 text-[#003566]">✅ Govt Loans & Subsidies</h3>
+        <p className="text-gray-600">
+          Registered businesses get access to government schemes, financial
+          assistance, and MSME benefits.
+        </p>
+      </div>
+
+      {/* ✅ Card 4 */}
+      <div className="rounded-2xl p-6 bg-[#f9fbfd] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:scale-105 transition-transform duration-300">
+        <h3 className="font-semibold mb-2 text-[#003566]">✅ National Recognition</h3>
+        <p className="text-gray-600">
+          Government-recognized FSSAI license boosts credibility and market reach
+          across India.
+        </p>
+      </div>
+
+      {/* ✅ Card 5 */}
+      <div className="rounded-2xl p-6 bg-[#f9fbfd] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:scale-105 transition-transform duration-300">
+        <h3 className="font-semibold mb-2 text-[#003566]">✅ Business Expansion</h3>
+        <p className="text-gray-600">
+          Expand your business across states and cities without restrictions.
+        </p>
+      </div>
+
+      {/* ✅ Card 6 */}
+      <div className="rounded-2xl p-6 bg-[#f9fbfd] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:scale-105 transition-transform duration-300">
+        <h3 className="font-semibold mb-2 text-[#003566]">✅ Right to Use Logo</h3>
+        <p className="text-gray-600">
+          Use the FSSAI logo on your packaging and branding for better trust.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Registration Process */}
       <section className="py-16 container mx-auto">
