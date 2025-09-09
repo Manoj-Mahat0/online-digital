@@ -1,8 +1,76 @@
-import React from "react";
+// src/pages/GstPage.jsx
+import React, { useState } from "react";
 
 export default function GstPage() {
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null); // { type: 'success'|'error', text: '...' }
+
+  function showToast(type, text, ms = 3500) {
+    setToast({ type, text });
+    setTimeout(() => setToast(null), ms);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (loading) return;
+    const form = e.target;
+    // collect values
+    const data = {
+      full_name: form.full_name.value.trim(),
+      dob: form.dob.value.trim(),
+      business_name: form.business_name.value.trim(),
+      business_type: form.business_type.value,
+      mobile_number: form.mobile_number.value.trim(),
+      email: form.email.value.trim(),
+      pan_number: form.pan_number.value.trim(),
+      state: form.state.value,
+      district: form.district.value.trim(),
+    };
+
+    // basic validation (you can expand)
+    if (!data.full_name || !data.mobile_number || !data.business_name) {
+      showToast("error", "Please fill required fields: Name, Mobile, Business name.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch("https://onlinebe.onrender.com/registrations/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const json = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        showToast("success", json.message || "Registration received");
+        form.reset();
+      } else {
+        const errMsg = json.message || `Server responded with ${res.status}`;
+        showToast("error", errMsg);
+      }
+    } catch (err) {
+      showToast("error", "Network error. Please try again.");
+      // console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="text-gray-800">
+      {/* Toast */}
+      {toast && (
+        <div
+          className={`fixed right-4 top-4 z-50 px-4 py-3 rounded shadow-lg transform transition-all
+            ${toast.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
+          role="status"
+        >
+          {toast.text}
+        </div>
+      )}
+
       {/* ✅ Logo & Title */}
       <div className="bg-[#f8fafc] flex flex-col md:flex-row justify-between items-center px-6 py-4 shadow-md">
         <div className="flex items-center gap-4">
@@ -17,18 +85,11 @@ export default function GstPage() {
           </p>
         </div>
         <div className="mt-4 md:mt-0">
-          {
-            <img
-              src="img/swach-bharat.jpg"
-              className="h-14 mx-auto md:justify-self-end"
-              alt="Swachh Bharat"
-            />
-          /* <a
-            href="#form-section"
-            className="bg-yellow-400 text-[#0f172a] px-4 py-2 rounded font-semibold hover:bg-yellow-500 transition"
-          >
-            Apply Now
-          </a> */}
+          <img
+            src="img/swach-bharat.jpg"
+            className="h-14 mx-auto md:justify-self-end"
+            alt="Swachh Bharat"
+          />
         </div>
       </div>
 
@@ -47,75 +108,49 @@ export default function GstPage() {
           in India
         </h1>
 
-        <button
-          className="px-6 py-3 mt-6 rounded-lg font-semibold text-white 
-               bg-gradient-to-r from-[#ff6b00] to-[#ff9500] 
-               hover:from-[#ff8533] hover:to-[#ffb84d] 
+        <a
+          href="#formsection"
+          className="inline-block px-6 py-3 mt-6 rounded-lg font-semibold text-white
+               bg-gradient-to-r from-[#ff6b00] to-[#ff9500]
+               hover:from-[#ff8533] hover:to-[#ffb84d]
                transition-all duration-300"
         >
-          <a href="#formsection"> Apply Now</a>
-        </button>
+          Apply Now
+        </a>
       </section>
 
-
-
       {/* ✅ Form + Instructions */}
-      <div className="container mx-auto px-4 my-12 grid md:grid-cols-2 gap-8 scroll-mt-24" id="formsection">
+      <div
+        className="container mx-auto px-4 my-12 grid md:grid-cols-2 gap-8 scroll-mt-24"
+        id="formsection"
+      >
         {/* Form */}
         <div className="neo p-6 flex flex-col" id="form-section">
-          <h2 className="text-3xl font-bold mb-2 text-[#0f172a]">
-            Get GST Registration
-          </h2>
-          <p className="mb-4 text-sm">
-            Fill this form with accurate details, and our experts will assist
-            you end-to-end.
-          </p>
-          <form className="space-y-4 flex-1">
-            <input
-              type="text"
-              placeholder="Full Name (As per PAN)"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
-            <input
-              type="date"
-              placeholder="Date of Birth"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
-            <input
-              type="text"
-              placeholder="Business/Company Name"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
-            <select className="neo-inset w-full p-3 rounded-lg">
-              <option>Select Business Type</option>
+          <h2 className="text-3xl font-bold mb-2 text-[#0f172a]">Get GST Registration</h2>
+          <p className="mb-4 text-sm">Fill this form with accurate details, and our experts will assist you end-to-end.</p>
+
+          <form className="space-y-4 flex-1" onSubmit={handleSubmit}>
+            <input name="full_name" required type="text" placeholder="Full Name (As per PAN)" className="neo-inset w-full p-3 rounded-lg" />
+
+            <input name="dob" type="date" placeholder="Date of Birth" className="neo-inset w-full p-3 rounded-lg" />
+
+            <input name="business_name" required type="text" placeholder="Business/Company Name" className="neo-inset w-full p-3 rounded-lg" />
+
+            <select name="business_type" className="neo-inset w-full p-3 rounded-lg">
+              <option value="">Select Business Type</option>
               <option>Proprietorship</option>
               <option>Partnership</option>
               <option>Pvt. Ltd.</option>
               <option>LLP</option>
             </select>
-            <input
-              type="text"
-              placeholder="Mobile *"
-              className="neo-inset rounded-lg px-4 py-3 w-full"
-              aria-label="Mobile"
-              inputMode="numeric"   // mobile keyboard pe numeric dikhayega
-              pattern="[0-9]*"      // sirf digits allow karega
-              onInput={(e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
-              }}
-            />
 
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
-            <input
-              type="text"
-              placeholder="PAN Number"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
-            <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
+            <input name="mobile_number" required type="text" placeholder="Mobile Number" className="neo-inset w-full p-3 rounded-lg" />
+
+            <input name="email" type="email" placeholder="Email Address" className="neo-inset w-full p-3 rounded-lg" />
+
+            <input name="pan_number" type="text" placeholder="PAN Number" className="neo-inset w-full p-3 rounded-lg" />
+
+            <select name="state" className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
               <option value="">Select State</option>
               <option>Andhra Pradesh</option>
               <option>Arunachal Pradesh</option>
@@ -146,41 +181,37 @@ export default function GstPage() {
               <option>Uttarakhand</option>
               <option>West Bengal</option>
             </select>
-            <input
-              type="text"
-              placeholder="District"
-              className="neo-inset w-full p-3 rounded-lg"
-            />
+
+            <input name="district" type="text" placeholder="District" className="neo-inset w-full p-3 rounded-lg" />
+
             <label className="flex items-start gap-2 text-sm">
-              <input type="checkbox" className="mt-1" /> I confirm all details
-              are correct and agree to Terms.
+              <input type="checkbox" className="mt-1" /> I confirm all details are correct and agree to Terms.
             </label>
+
             <button
               type="submit"
-              className="w-full py-3 rounded-lg font-bold text-yellow-500 bg-[#1a2340] hover:bg-[#162036] transition-shadow shadow-md"
+              disabled={loading}
+              className={`w-full py-3 rounded-lg font-bold text-yellow-500 bg-[#1a2340] hover:bg-[#162036] transition-shadow shadow-md ${loading ? "opacity-60 cursor-wait" : ""
+                }`}
             >
-              Submit Application
+              {loading ? "Submitting..." : "Submit Application"}
             </button>
-
-
           </form>
         </div>
 
         {/* Instructions */}
         <div className="neo p-6 flex flex-col">
-          <h3 className="gradient-title text-xl md:text-3xl font-bold mb-5">
-            Instructions to Fill the Form
-          </h3>
+          <h3 className="gradient-title text-xl md:text-3xl font-bold mb-5">Instructions to Fill the Form</h3>
           <ul className="space-y-4 text-base md:text-lg leading-relaxed flex-1">
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Name must match exactly with your PAN card to avoid discrepancies.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Use a valid mobile number linked with Aadhaar for OTP verification.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Keep scanned Aadhaar, PAN, and business proof documents ready for upload.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Provide the correct incorporation or registration date for companies and LLPs.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Choose the correct business type carefully (Proprietorship, LLP, Private Limited, etc.).</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Enter the official registered business address; avoid informal addresses.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Double-check email address — OTPs and notifications will be sent there.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Review all entered details before submitting to avoid rejection or delays.</li>
-            <li><i class="fa fa-check-circle text-yellow-500 mr-2"></i> Ensure scanned documents are legible and in PDF/JPEG/PNG formats.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Name must match exactly with your PAN card to avoid discrepancies.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Use a valid mobile number linked with Aadhaar for OTP verification.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Keep scanned Aadhaar, PAN, and business proof documents ready for upload.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Provide the correct incorporation or registration date for companies and LLPs.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Choose the correct business type carefully (Proprietorship, LLP, Private Limited, etc.).</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Enter the official registered business address; avoid informal addresses.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Double-check email address — OTPs and notifications will be sent there.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Review all entered details before submitting to avoid rejection or delays.</li>
+            <li><i className="fa fa-check-circle text-yellow-500 mr-2" /> Ensure scanned documents are legible and in PDF/JPEG/PNG formats.</li>
           </ul>
         </div>
       </div>
@@ -188,48 +219,30 @@ export default function GstPage() {
       {/* ✅ Benefits */}
       <section className="py-12 bg-white">
         <div className="container mx-auto text-center">
-          <h2 class="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6
-            shadow-lg shadow-indigo-500/50">
+          <h2 className="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6 shadow-lg shadow-indigo-500/50">
             Benefits of GST Registration
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
             <div className="neo p-6">
               <h4 className="font-bold mb-2">Official Business Status</h4>
-              <p>
-                Obtaining a GSTIN (GST Identification Number) provides your
-                business with a formal identity and increases customer and
-                vendor confidence.
-              </p>
+              <p>Obtaining a GSTIN (GST Identification Number) provides your business with a formal identity and increases customer and vendor confidence.</p>
             </div>
             <div className="neo p-6">
               <h4 className="font-bold mb-2">Input Tax Credit Advantage</h4>
-              <p>
-                Your tax bill might be reduced by claiming credit for the GST
-                you paid on purchases.
-              </p>
+              <p>Your tax bill might be reduced by claiming credit for the GST you paid on purchases.</p>
             </div>
             <div className="neo p-6">
               <h4 className="font-bold mb-2">Cross-State Operations Made Simple</h4>
-              <p>
-                With <a href="#">GST registration</a>, your business can operate
-                in multiple states without facing interstate tax hurdles.
-              </p>
+              <p>With <a href="#">GST registration</a>, your business can operate in multiple states without facing interstate tax hurdles.</p>
             </div>
             <div className="neo p-6">
               <h4 className="font-bold mb-2">Mandatory for Online Selling</h4>
-              <p>
-                All online sellers must be GST registered. Marketplaces often
-                require your GSTIN to list products.
-              </p>
+              <p>All online sellers must be GST registered. Marketplaces often require your GSTIN to list products.</p>
             </div>
             <div className="neo p-6">
               <h4 className="font-bold mb-2">Enhanced Market Reputation</h4>
-              <p>
-                An enterprise that is GST-registered will be considered reliable
-                and compliant, thus facilitating better commercial opportunities
-                and alliances.
-              </p>
+              <p>An enterprise that is GST-registered will be considered reliable and compliant, thus facilitating better commercial opportunities and alliances.</p>
             </div>
             <div className="neo p-6">
               <h4 className="font-bold mb-2">Avoid Legal Troubles</h4>
@@ -242,36 +255,26 @@ export default function GstPage() {
       {/* ✅ Why Choose */}
       <section className="py-12">
         <div className="container mx-auto text-center">
-          <h2 class="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6
-            shadow-lg shadow-indigo-500/50">
+          <h2 className="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6 shadow-lg shadow-indigo-500/50">
             Why Choose Online Digital India?
           </h2>
           <div className="grid md:grid-cols-4 gap-6">
-
-            {/* Expert Guidance */}
             <div className="neo p-6">
               <i className="fa-solid fa-chalkboard-user text-yellow-500 text-3xl mb-2"></i>
               <p className="font-medium">Expert Guidance</p>
             </div>
-
-            {/* Quick Approvals */}
             <div className="neo p-6">
               <i className="fa-solid fa-bolt-lightning text-yellow-500 text-3xl mb-2"></i>
               <p className="font-medium">Quick Approvals</p>
             </div>
-
-            {/* Secure Process */}
             <div className="neo p-6">
               <i className="fa-solid fa-shield-halved text-yellow-500 text-3xl mb-2"></i>
               <p className="font-medium">Secure Process</p>
             </div>
-
-            {/* Trusted Organization */}
             <div className="neo p-6">
               <i className="fa-solid fa-handshake text-yellow-500 text-3xl mb-2"></i>
               <p className="font-medium">Trusted Organization</p>
             </div>
-
           </div>
         </div>
       </section>
@@ -279,68 +282,50 @@ export default function GstPage() {
       {/* ✅ Steps */}
       <section className="py-12 bg-white">
         <div className="container mx-auto text-center">
-          <h2 class="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6
-            shadow-lg shadow-indigo-500/50">
+          <h2 className="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6 shadow-lg shadow-indigo-500/50">
             Step-by-Step Process
           </h2>
 
           <div className="grid md:grid-cols-4 gap-6 relative">
-
-            {/* Step 1 */}
             <div className="neo p-6 relative flex flex-col items-center">
               <div className="w-14 h-14 flex items-center justify-center bg-[#ff6b00] text-white rounded-full shadow mb-3">
                 <i className="fa-solid fa-file-alt text-xl"></i>
               </div>
-              <p className="text-sm">
-                Enter your relevant information in the online application form.
-              </p>
-              {/* Connector line */}
+              <p className="text-sm">Enter your relevant information in the online application form.</p>
               <div className="hidden md:block absolute top-1/2 right-0 w-6 h-1 bg-gray-800 translate-x-1/2"></div>
             </div>
 
-            {/* Step 2 */}
             <div className="neo p-6 relative flex flex-col items-center">
               <div className="w-14 h-14 flex items-center justify-center bg-[#ff6b00] text-white rounded-full shadow mb-3">
                 <i className="fa-solid fa-phone text-xl"></i>
               </div>
-              <p className="text-sm">
-                Our representative will call you for the GST registration.
-              </p>
+              <p className="text-sm">Our representative will call you for the GST registration.</p>
               <div className="hidden md:block absolute top-1/2 right-0 w-6 h-1 bg-gray-800 translate-x-1/2"></div>
             </div>
 
-            {/* Step 3 */}
             <div className="neo p-6 relative flex flex-col items-center">
               <div className="w-14 h-14 flex items-center justify-center bg-[#ff6b00] text-white rounded-full shadow mb-3">
                 <i className="fa-solid fa-id-card text-xl"></i>
               </div>
-              <p className="text-sm">
-                For verification, submit the necessary paperwork or an OTP.
-              </p>
+              <p className="text-sm">For verification, submit the necessary paperwork or an OTP.</p>
               <div className="hidden md:block absolute top-1/2 right-0 w-6 h-1 bg-gray-800 translate-x-1/2"></div>
             </div>
 
-            {/* Step 4 */}
             <div className="neo p-6 relative flex flex-col items-center">
               <div className="w-14 h-14 flex items-center justify-center bg-[#ff6b00] text-white rounded-full shadow mb-3">
                 <i className="fa-solid fa-certificate text-xl"></i>
               </div>
-              <p className="text-sm">
-                Obtain your GST Number in three to seven days.
-              </p>
+              <p className="text-sm">Obtain your GST Number in three to seven days.</p>
             </div>
-
           </div>
         </div>
       </section>
-
 
       {/* ✅ FAQ */}
       <section className="py-12">
         <div className="container mx-auto">
           <div className="text-center">
-            <h2 className="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] 
-                 px-6 py-3 rounded-lg mb-6 shadow-lg shadow-indigo-500/50">
+            <h2 className="relative inline-block text-2xl font-bold text-yellow-500 bg-[#1a2340] px-6 py-3 rounded-lg mb-6 shadow-lg shadow-indigo-500/50">
               Frequently Asked Questions
             </h2>
           </div>
@@ -420,7 +405,6 @@ export default function GstPage() {
               </details>
             </div>
           </div>
-
         </div>
       </section>
     </main>

@@ -1,6 +1,8 @@
 // src/pages/IecPage.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function IecPage() {
   const [faqOpen, setFaqOpen] = useState([false, false, false, false]);
@@ -13,20 +15,71 @@ export default function IecPage() {
     });
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const fd = new FormData(form);
+    // Build payload expected by API
+    const payload = {
+      name: fd.get("name") || "",
+      email: fd.get("email") || "",
+      mobile: fd.get("mobile") || "",
+      state: fd.get("state") || "",
+      agree_terms: fd.get("agree_terms") === "on" || fd.get("agree_terms") === "true" || fd.get("agree_terms") === "yes" ? true : false,
+    };
+
+    // Basic client-side check: name and mobile required
+    if (!payload.name.trim()) {
+      toast.error("Please enter your name.");
+      return;
+    }
+    if (!/^\d{10}$/.test(payload.mobile)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    try {
+      const resp = await fetch("https://onlinebe.onrender.com/iec/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await resp.json().catch(() => ({}));
+
+      if (resp.status === 201) {
+        toast.success(data.message || "IEC registration received");
+        form.reset();
+      } else {
+        const msg = data?.message || data?.detail || `Submission failed (${resp.status})`;
+        toast.error(msg);
+      }
+    } catch (err) {
+      console.error("IEC submit error:", err);
+      toast.error("Network error — please check your connection.");
+    }
+  }
+
   return (
     <main className="bg-[#f3f4f6] text-gray-800">
+      <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
       <div className="container mx-auto px-4 py-8">
-
         {/* Hero / Intro */}
         <section className="grid lg:grid-cols-2 gap-8 items-stretch mb-10">
           {/* Left: Form */}
           <div className="p-8 rounded-2xl shadow-lg bg-white flex flex-col justify-center h-full">
             <h2 className="text-3xl font-bold text-center mb-6">Apply for IEC Registration</h2>
 
-            <form className="space-y-4 flex-grow" onSubmit={(e) => e.preventDefault()}>
+            {/* <-- wired to handleSubmit, names added to inputs --> */}
+            <form className="space-y-4 flex-grow" onSubmit={handleSubmit}>
               <div>
                 <label className="block font-medium mb-1">Name *</label>
                 <input
+                  name="name"
                   type="text"
                   placeholder="Your Name"
                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -36,6 +89,7 @@ export default function IecPage() {
               <div>
                 <label className="block font-medium mb-1">Email *</label>
                 <input
+                  name="email"
                   type="email"
                   placeholder="Your Email"
                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -45,22 +99,22 @@ export default function IecPage() {
               <div>
                 <label className="block font-medium mb-1">Mobile Number *</label>
                 <input
+                  name="mobile"
                   type="text"
                   placeholder="Mobile *"
                   className="neo-inset rounded-lg px-4 py-3 w-full"
                   aria-label="Mobile"
-                  inputMode="numeric"   // mobile keyboard pe numeric dikhayega
-                  pattern="[0-9]*"      // sirf digits allow karega
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   onInput={(e) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // non-numeric hatao
+                    e.target.value = e.target.value.replace(/[^0-9]/g, ""); // keep digits only
                   }}
                 />
-
               </div>
 
               <div>
                 <label className="block font-medium mb-1">Select State *</label>
-                <select className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
+                <select name="state" className="neo-inset w-full mt-2 px-3 py-2 rounded-lg focus:outline-none">
                   <option value="">Select State</option>
                   <option>Andhra Pradesh</option>
                   <option>Arunachal Pradesh</option>
@@ -94,7 +148,7 @@ export default function IecPage() {
               </div>
 
               <div className="flex items-start gap-2">
-                <input type="checkbox" className="mt-1" id="agree-terms" />
+                <input name="agree_terms" type="checkbox" className="mt-1" id="agree-terms" />
                 <label htmlFor="agree-terms" className="text-sm text-gray-600">
                   I agree to Terms & Conditions and Refund Policy.
                 </label>
@@ -125,14 +179,9 @@ export default function IecPage() {
                 With our expert support, you can focus on growing your exports while we handle all compliance and documentation.
               </p>
             </div>
-            <div className="text-center mt-6">
-              {/* <button className="px-6 py-3 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 shadow">
-        Learn More
-      </button> */}
-            </div>
+            <div className="text-center mt-6"></div>
           </div>
         </section>
-
 
         {/* What is IEC */}
         <section className="mb-12">
@@ -143,7 +192,6 @@ export default function IecPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Card 1 */}
             <div className="bg-white neumorph p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
               <h3 className="text-lg font-bold text-[#1a2249] mb-2">Q1. What is IEC Registration?</h3>
               <p className="text-gray-700">
@@ -152,7 +200,6 @@ export default function IecPage() {
               </p>
             </div>
 
-            {/* Card 2 */}
             <div className="bg-white neumorph p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
               <h3 className="text-lg font-bold text-[#1a2249] mb-2">Q2. What are the key points of IEC?</h3>
               <ul className="list-disc ml-5 space-y-2 text-gray-700">
