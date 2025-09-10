@@ -1,6 +1,7 @@
 // src/App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import NotFoundPage from "./pages/404notfound";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -24,69 +25,94 @@ import MsmePage from "./pages/MsmePage";
 import AdminLayout from "./admin/AdminLayout";
 import Dashboard from "./admin/Dashboard";
 import GstAdmin from "./admin/GstAdmin";
-// import FssaiAdmin from "./admin/FssaiAdmin";
-
-// Optional 404
-function NotFound() {
-  return (
-    <div className="min-h-[60vh] flex items-center justify-center p-8">
-      <div className="text-center neo rounded-xl p-8">
-        <h2 className="text-2xl font-bold mb-2">Page not found</h2>
-        <p className="text-sm text-gray-600">
-          Sorry, the page you're looking for doesn't exist.
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export default function App() {
   return (
-    <div className="text-gray-800">
-      <Header />
+    <Routes>
+      {/* Landing page with header/footer */}
+      <Route
+        path="/"
+        element={
+          <>
+            <Header />
+            <Hero />
+            <Success />
+            <Services />
+            <WhyUs />
+            <Testimonials />
+            <Footer />
+          </>
+        }
+      />
 
-      <Routes>
-        {/* Landing page */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <Success />
-              <Services />
-              <WhyUs />
-              <Testimonials />
-            </>
-          }
-        />
+      {/* Service pages with header/footer */}
+      <Route
+        path="/gst"
+        element={
+          <>
+            <Header />
+            <GstPage />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/gem"
+        element={
+          <>
+            <Header />
+            <GemPage />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/fssai"
+        element={
+          <>
+            <Header />
+            <FssaiPage />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/iso"
+        element={
+          <>
+            <Header />
+            <IsoPage />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/iec"
+        element={
+          <>
+            <Header />
+            <IecPage />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/msme"
+        element={
+          <>
+            <Header />
+            <MsmePage />
+            <Footer />
+          </>
+        }
+      />
 
-        {/* Service pages */}
-        <Route path="/gst" element={<GstPage />} />
-        <Route path="/gem" element={<GemPage />} />
-        <Route path="/fssai" element={<FssaiPage />} />
-        <Route path="/iso" element={<IsoPage />} />
-        <Route path="/iec" element={<IecPage />} />
-        <Route path="/msme" element={<MsmePage />} />
+      {/* Admin routes */}
+      <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
+      <Route path="/admin/gst" element={<AdminLayout><GstAdmin /></AdminLayout>} />
 
-        {/* Admin routes */}
-        <Route
-          path="/admin"
-          element={<AdminLayout><Dashboard /></AdminLayout>}
-        />
-        <Route
-          path="/admin/gst"
-          element={<AdminLayout><GstAdmin /></AdminLayout>}
-        />
-        {/* <Route
-          path="/admin/fssai"
-          element={<AdminLayout><FssaiAdmin /></AdminLayout>}
-        /> */}
-
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
-      <Footer />
-    </div>
+      {/* 404 page WITHOUT header/footer */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }

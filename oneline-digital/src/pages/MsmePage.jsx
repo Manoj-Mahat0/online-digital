@@ -94,9 +94,7 @@ export default function MsmePage() {
       <ToastContainer position="bottom-right" autoClose={4000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
       <div className="container mx-auto px-4 py-6">
 
-        {/* Topbar (kept as-is) */}
-        <div className="bg-forest text-white py-2 rounded-md mb-4 hidden"></div>
-
+       
 
         {/* Header */}
         <header className="w-full bg-gradient-to-r from-[#0a3c2f] to-[#502c6d] text-white py-6 mb-6 rounded-none">

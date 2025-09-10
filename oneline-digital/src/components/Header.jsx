@@ -11,9 +11,9 @@ export default function Header() {
 
       {/* Desktop nav */}
       <nav className="hidden md:flex space-x-6 font-medium">
-        <a href="#" className="hover:text-blue-600">Home</a>
+        <a href="/" className="hover:text-blue-600">Home</a>
         <a href="#about" className="hover:text-blue-600">About</a>
-        <a href="#services" className="hover:text-blue-600">ISO</a>
+        <a href="/iso" className="hover:text-blue-600">ISO</a>
         <a href="#blog" className="hover:text-blue-600">Blog</a>
         <a href="#contact" className="hover:text-blue-600">Contact</a>
       </nav>
